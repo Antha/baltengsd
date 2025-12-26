@@ -1,0 +1,222 @@
+<?php $this->extend('/templates/template_main') ?>
+
+<?php $this->section('content') ?>
+
+    <div id="main-wrapper" class="dashboard-page min-vh-100 d-flex flex-column">
+        <?= $this->include('/includes/include_top_navbar'); ?>     
+        <div class="container-fluid menu-dashboard bg-body-secondary">
+            <div class="row">
+                <div class="col-12 pt-3 pb-2 ps-3 pe-3">
+                    <div class="container-fluid rounded main-bg pt-3">
+                        <div class="row mt-1">
+                            <div class="back-btn mb-3">
+                                <a href="/home">
+                                    <i class="fa-solid fa-circle-left me-1" style="font-size: 20px;"></i>
+                                </a>
+                                <h5 class="d-inline-block">HOME</h5>
+                            </div>
+                            <h3 class="mb-3">OMSET TRX</h3>
+                            <div id="table_ommset_trx_cvm_summary" class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
+                                        <thead>
+                                            <tr class="text-center align-middle">
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 120px;">TAP</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 120px;">CHANNEL</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 50px;">OR</th>
+                                                <th colspan="12" class="deep_blue" scope="col">MONITORING <?php echo $parse_type; ?> TRX DIGIPOS</th>
+                                                <th colspan="4" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
+                                                <th colspan="6" class="deep_green" scope="col">CVM CONT</th>
+                                                <th colspan="3" class="deep_red" scope="col">PAKET CONT</th>
+                                            </tr>
+                                            <tr class="text-center align-middle">
+                                                <th colspan="4" class="deep_blue" scope="col">HISTORY FM-1</th>
+                                                <th colspan="2" class="deep_blue" scope="col">TARGET</th>
+                                                <th colspan="6" class="deep_blue" scope="col">ACH S/D TANGGAL <?php echo $tgl_update; ?></th>
+                                                <th colspan="2" class="deep_blue" scope="col" style="min-width: 100px;">RUN RATE</th>
+                                                <th colspan="2" class="deep_blue" scope="col">GAP EOM</th>
+                                                <th colspan="3" class="deep_green" scope="col">REV</th>
+                                                <th colspan="3" class="deep_green" scope="col">%REV</th>
+                                                <th colspan="3" class="deep_red" scope="col">REV</th>
+                                            </tr>
+                                            <tr class="text-center align-middle">
+                                               
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">OA</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">OA%</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">QTY</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">REV</th>
+
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">QTY</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">REV</th>
+
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">OA</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">OA%</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">QTY</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">%ACH</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">REV</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">%ACH</th>
+
+                                                <th class="deep_blue" scope="col">QTY</th>
+                                                <th class="deep_blue" scope="col">REV</th>
+
+                                                <th class="deep_blue" scope="col">QTY</th>
+                                                <th class="deep_blue" scope="col">REV</th>
+                                               
+                                                <th class="deep_green" scope="col" style="min-width: 100px;">SUPER SERU</th>
+                                                <th class="deep_green" scope="col" style="min-width: 100px;">HOT PROMO</th>
+                                                <th class="deep_green" scope="col">OTHER</th>
+                                                <th class="deep_green" scope="col" style="min-width: 60px;">SS</th>
+                                                <th class="deep_green" scope="col" style="min-width: 60px;">HP</th>
+                                                <th class="deep_green" scope="col">OTHER</th>
+                                                <th class="deep_red" scope="col">VAS</th>
+                                                <th class="deep_red" scope="col">CVM</th>
+                                                <th class="deep_red" scope="col">%CVM</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           <?php foreach($query_omset_trx_summary as $rows){ ?>
+                                                <tr>
+                                                    <td><?php echo $rows['tap']; ?></td>
+                                                    <td><?php echo $rows['channel']; ?></td>
+                                                    <td ><?php echo $rows['pic']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['or_trx']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_mtd']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['trx_mtd']; ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_superseru_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_hotpromo_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_other_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_rev_superseru']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['percent_rev_hotpromo']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['percent_rev_other']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_vas_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_rev_cvm']; ?>%</td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                 </div>
+                            </div>
+
+                            <div id="table_ommset_trx_cvm_detail" class="col-12 mt-3 mb-5">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
+                                        <thead>
+                                            <tr class="text-center align-middle">
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 120px;">DIGIPOS</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 180px;">OUTLET</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 50px;">OR</th>
+                                                <th colspan="12" class="deep_blue" scope="col">MONITORING <?php echo $parse_type; ?> TRX DIGIPOS</th>
+                                                <th colspan="4" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
+                                                <th colspan="6" class="deep_green" scope="col">CVM CONT</th>
+                                                <th colspan="3" class="deep_red" scope="col">PAKET CONT</th>
+                                            </tr>
+                                            <tr class="text-center align-middle">
+                                                <th colspan="4" class="deep_blue" scope="col">HISTORY FM-1</th>
+                                                <th colspan="2" class="deep_blue" scope="col">TARGET</th>
+                                                <th colspan="6" class="deep_blue" scope="col">ACH S/D TANGGAL <?php echo $tgl_update; ?></th>
+                                                <th colspan="2" class="deep_blue" scope="col" style="min-width: 100px;">RUN RATE</th>
+                                                <th colspan="2" class="deep_blue" scope="col">GAP EOM</th>
+                                                <th colspan="3" class="deep_green" scope="col">REV</th>
+                                                <th colspan="3" class="deep_green" scope="col">%REV</th>
+                                                <th colspan="3" class="deep_red" scope="col">REV</th>
+                                            </tr>
+                                            <tr class="text-center align-middle">
+                                               
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">OA</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">OA%</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">QTY</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">REV</th>
+
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">QTY</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">REV</th>
+
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">OA</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">OA%</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">QTY</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">%ACH</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">REV</th>
+                                                <th class="deep_blue" scope="col" style="min-width: 60px;">%ACH</th>
+
+                                                <th class="deep_blue" scope="col">QTY</th>
+                                                <th class="deep_blue" scope="col">REV</th>
+
+                                                <th class="deep_blue" scope="col">QTY</th>
+                                                <th class="deep_blue" scope="col">REV</th>
+                                               
+                                                <th class="deep_green" scope="col" style="min-width: 100px;">SUPER SERU</th>
+                                                <th class="deep_green" scope="col" style="min-width: 100px;">HOT PROMO</th>
+                                                <th class="deep_green" scope="col">OTHER</th>
+                                                <th class="deep_green" scope="col" style="min-width: 60px;">SS</th>
+                                                <th class="deep_green" scope="col" style="min-width: 60px;">HP</th>
+                                                <th class="deep_green" scope="col">OTHER</th>
+                                                <th class="deep_red" scope="col">VAS</th>
+                                                <th class="deep_red" scope="col">CVM</th>
+                                                <th class="deep_red" scope="col">%CVM</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           <?php foreach($query_omset_trx_detail as $rows){ ?>
+                                                <tr>
+                                                    <td><?php echo $rows['id_digipos']; ?></td>
+                                                    <td><?php echo $rows['outlet']; ?></td>
+                                                    <td><?php echo $rows['hari_pjp']; ?></td>
+                                                    <td ><?php echo $rows['pic']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['or_trx']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['trx_m1']; ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_mtd']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['trx_mtd']; ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_superseru_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_hotpromo_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_other_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_rev_superseru']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['percent_rev_hotpromo']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['percent_rev_other']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_vas_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_rev_cvm']; ?>%</td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <?= $this->include('/includes/include_footer'); ?>
+        </div>      
+    </div>
+
+<?php $this->endSection() ?>
