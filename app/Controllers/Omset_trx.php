@@ -53,7 +53,7 @@ class Omset_trx extends BaseController
         }
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
-        $parse_hari_pjp = "SENIN";
+        $parse_hari_pjp = "SELASA";
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{

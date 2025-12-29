@@ -10,7 +10,7 @@
                     <div class="container-fluid rounded main-bg pt-5">
                         <div class="row justify-content-center mt-3">
                             <div class="col-2 text-center">
-                                <a href="/omset_trx_dashboard" class="d-inline-block border rounded w-100 menu">
+                                <a href="omset_trx" class="d-inline-block border rounded w-100 menu">
                                     <div class="p-3">
                                         <div class="d-inline-block w-100">
                                             <i class="fa-solid fa-magnifying-glass-chart fs-1"></i>
