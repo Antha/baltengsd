@@ -16,7 +16,7 @@ class OmsetTrxModel extends Model
     function get_latest_update_date_m(){
 
         $query = "SELECT MAX(update_date) update_date, MAX(periode) periode
-                FROM bts.db_profile_outlet_m";
+                FROM baltengsatudata_balteng.db_profile_outlet_m";
         
         $resultQuery = $this->db->query($query);
         if($resultQuery)return $resultQuery->getRowArray();
@@ -25,7 +25,7 @@ class OmsetTrxModel extends Model
      function get_latest_update_date_m1(){
 
         $query = "SELECT MAX(update_date) update_date, MAX(periode) periode
-                FROM bts.db_profile_outlet_m1";
+                FROM baltengsatudata_balteng.db_profile_outlet_m1";
         
         $resultQuery = $this->db->query($query);
         if($resultQuery)return $resultQuery->getRowArray();
@@ -35,7 +35,7 @@ class OmsetTrxModel extends Model
 
         $query = "SELECT MAX(CASE WHEN grouping_periode = 'M' THEN periode_date END) update_date_m, 
                 MAX(CASE WHEN grouping_periode = 'M-1' THEN periode_date END) update_date_m1
-                FROM bts.db_st_digipos";
+                FROM baltengsatudata_balteng.db_st_digipos";
         
         $resultQuery = $this->db->query($query);
         if($resultQuery)return $resultQuery->getRowArray();
@@ -92,10 +92,10 @@ class OmsetTrxModel extends Model
                 WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic)A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type
-                FROM bts.`db_profile_outlet_m`
+                FROM baltengsatudata_balteng.`db_profile_outlet_m`
                 UNION
                 SELECT periode,update_date,id_outlet,trx_$type,rev_$type
-                FROM bts.`db_profile_outlet_m1`)B
+                FROM baltengsatudata_balteng.`db_profile_outlet_m1`)B
                 ON A.`id_digipos` = B.`id_outlet`
                 GROUP BY A.id_digipos,outlet,tap,channel,pic,hari_pjp";
 
@@ -134,10 +134,10 @@ class OmsetTrxModel extends Model
                 WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic)A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type
-                FROM bts.`db_profile_outlet_m`
+                FROM baltengsatudata_balteng.`db_profile_outlet_m`
                 UNION
                 SELECT periode,update_date,id_outlet,trx_$type,rev_$type
-                FROM bts.`db_profile_outlet_m1`)B
+                FROM baltengsatudata_balteng.`db_profile_outlet_m1`)B
                 ON A.`id_digipos` = B.`id_outlet`
                 GROUP BY tap,channel,pic";
 
@@ -425,10 +425,10 @@ class OmsetTrxModel extends Model
                 WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic)A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa
-                FROM bts.`db_profile_outlet_m`
+                FROM baltengsatudata_balteng.`db_profile_outlet_m`
                 UNION
                 SELECT periode,update_date,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa
-                FROM bts.`db_profile_outlet_m1`)B
+                FROM baltengsatudata_balteng.`db_profile_outlet_m1`)B
                 ON A.`id_digipos` = B.`id_outlet`
                 GROUP BY A.id_digipos,outlet,tap,channel,pic,hari_pjp";
 
@@ -475,10 +475,10 @@ class OmsetTrxModel extends Model
                 WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic)A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa
-                FROM bts.`db_profile_outlet_m`
+                FROM baltengsatudata_balteng.`db_profile_outlet_m`
                 UNION
                 SELECT periode,update_date,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa
-                FROM bts.`db_profile_outlet_m1`)B
+                FROM baltengsatudata_balteng.`db_profile_outlet_m1`)B
                 ON A.`id_digipos` = B.`id_outlet`
                 GROUP BY tap,channel,pic,hari_pjp";
 
@@ -792,7 +792,7 @@ class OmsetTrxModel extends Model
                 (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
                 validity,qty,rev
                 FROM db_outlet A
-                JOIN  bts.`db_st_digipos` B
+                JOIN  baltengsatudata_balteng.`db_st_digipos` B
                 ON A.`id_digipos` = B.`id_outlet`
                 WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic AND $jenis_produk) source
                 GROUP BY id_digipos,outlet,hari_pjp,pic";
@@ -828,7 +828,7 @@ class OmsetTrxModel extends Model
                 (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
                 validity,qty,rev
                 FROM db_outlet A
-                JOIN  bts.`db_st_digipos` B
+                JOIN  baltengsatudata_balteng.`db_st_digipos` B
                 ON A.`id_digipos` = B.`id_outlet`
                 WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic AND $jenis_produk) source
                 GROUP BY tap,channel,pic,hari_pjp";
@@ -1008,10 +1008,10 @@ class OmsetTrxModel extends Model
                 WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic)A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg
-                FROM bts.`db_profile_outlet_m`
+                FROM baltengsatudata_balteng.`db_profile_outlet_m`
                 UNION
                 SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg
-                FROM bts.`db_profile_outlet_m1`)B
+                FROM baltengsatudata_balteng.`db_profile_outlet_m1`)B
                 ON A.`id_digipos` = B.`id_outlet`
                 GROUP BY A.id_digipos,outlet,tap,channel,pic,hari_pjp";
 
@@ -1050,10 +1050,10 @@ class OmsetTrxModel extends Model
                 WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic)A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg
-                FROM bts.`db_profile_outlet_m`
+                FROM baltengsatudata_balteng.`db_profile_outlet_m`
                 UNION
                 SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg
-                FROM bts.`db_profile_outlet_m1`)B
+                FROM baltengsatudata_balteng.`db_profile_outlet_m1`)B
                 ON A.`id_digipos` = B.`id_outlet`
                 GROUP BY tap,channel,pic";
 
