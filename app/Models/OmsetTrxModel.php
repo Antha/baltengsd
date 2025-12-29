@@ -41,6 +41,28 @@ class OmsetTrxModel extends Model
         if($resultQuery)return $resultQuery->getRowArray();
     }
 
+    function query_pic_list($tap){
+        $query = "SELECT 'ALL' pic FROM db_outlet 
+                UNION 
+                SELECT pic FROM db_outlet WHERE channel = 'SF CHANNELING' AND $tap GROUP BY pic";
+
+        $resultQuery = $this->db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+
+    function query_tap_list(){
+        $query = "SELECT 'ALL' tap FROM db_outlet 
+                UNION SELECT tap FROM db_outlet GROUP BY tap";
+
+        $resultQuery = $this->db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+
+    /*bot telegram */
     function omset_data_detail_t1($pic,$type,$hari_pjp,$pm,$pm1,$dm,$dm1){
         $pic = $this->db->escape($pic);
         $pm = $this->db->escape($pm);
@@ -57,11 +79,11 @@ class OmsetTrxModel extends Model
                 COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END) oa_trx_mtd,
                 IFNULL(ROUND((COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)/COUNT(CASE WHEN periode = $pm THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0) trx_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0) ach_trx,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) rev_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0) ach_rev,
-                ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0) rr_trx,
-                ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0) rr_rev,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) gap_trx,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) gap_rev
                 FROM
@@ -99,11 +121,11 @@ class OmsetTrxModel extends Model
                 COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END) oa_trx_mtd,
                 IFNULL(ROUND((COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)/COUNT(CASE WHEN periode = $pm THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0) trx_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0) ach_trx,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) rev_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0) ach_rev,
-                ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0) rr_trx,
-                ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0) rr_rev,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) gap_trx,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) gap_rev
                 FROM
@@ -124,7 +146,248 @@ class OmsetTrxModel extends Model
 			return $resultQuery->getResultArray();
 		}
     }
+    /*end bot telegram */
 
+    /*dashboard */
+    function omset_data_detail_dsh_t1($tap,$pic,$type,$hari_pjp,$pm,$pm1,$dm,$dm1){
+        $pm = $this->db->escape($pm);
+        $pm1 = $this->db->escape($pm1);
+
+        $query = "SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+
+                    COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
+                    COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END) oa_trx_m1,
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ) percent_oa_trx_m1,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) trx_m1,
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) rev_m1,
+
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*1.03,0) target_trx,
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*1.03,0) target_rev,
+
+                    COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END) oa_trx_mtd,
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ) percent_oa_trx_mtd,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0) trx_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) rev_mtd,
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) gap_trx,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) gap_rev
+
+                FROM db_outlet A
+                JOIN (
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM db_profile_outlet_m
+                    UNION ALL
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM db_profile_outlet_m1
+                ) B ON A.id_digipos = B.id_outlet
+
+                WHERE UPPER(channel) = 'SF CHANNELING'
+                AND $tap
+                AND $hari_pjp
+                AND $pic
+
+                GROUP BY id_digipos,outlet,tap,channel,pic,hari_pjp
+
+                UNION ALL
+
+                SELECT
+                    'TOTAL' AS id_digipos,
+                    '' AS outlet,
+                    '' AS tap,
+                    '' AS channel,
+                    '' AS pic,
+                    '' AS hari_pjp,
+
+                    COUNT(CASE WHEN periode = $pm THEN hari_pjp END),
+                    COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END),
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0),
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0),
+
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*1.03,0),
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*1.03,0),
+
+                    COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END),
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0),
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0),
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)
+
+                FROM db_outlet A
+                JOIN (
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM bts.db_profile_outlet_m
+                    UNION ALL
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM bts.db_profile_outlet_m1
+                ) B ON A.id_digipos = B.id_outlet
+
+                WHERE UPPER(channel) = 'SF CHANNELING'
+                AND $tap
+                AND $hari_pjp
+                AND $pic";
+
+        $resultQuery = $this->db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+
+    function omset_data_summary_dsh_t1($tap,$type,$hari_pjp,$pm,$pm1,$dm,$dm1){
+        //$pic = $this->db->escape($pic);
+        $pm = $this->db->escape($pm);
+        $pm1 = $this->db->escape($pm1);
+
+        $query = "SELECT
+                    tap, channel, pic,
+
+                    COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
+                    COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END) oa_trx_m1,
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ) percent_oa_trx_m1,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) trx_m1,
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) rev_m1,
+
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*1.03,0) target_trx,
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*1.03,0) target_rev,
+
+                    COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END) oa_trx_mtd,
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ) percent_oa_trx_mtd,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0) trx_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) rev_mtd,
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) gap_trx,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) gap_rev
+
+                FROM db_outlet A
+                JOIN (
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM db_profile_outlet_m
+                    UNION ALL
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM db_profile_outlet_m1
+                ) B ON A.id_digipos = B.id_outlet
+
+                WHERE UPPER(channel) = 'SF CHANNELING'
+                AND $tap
+                AND $hari_pjp
+
+                GROUP BY tap, channel, pic
+
+                UNION ALL
+
+                SELECT
+                    'TOTAL' AS tap,
+                    '' AS channel,
+                    '' AS pic,
+
+                    COUNT(CASE WHEN periode = $pm THEN hari_pjp END),
+                    COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END),
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0),
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0),
+
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*1.03,0),
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*1.03,0),
+
+                    COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END),
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0),
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0),
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)
+
+                FROM db_outlet A
+                JOIN (
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM bts.db_profile_outlet_m
+                    UNION ALL
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM bts.db_profile_outlet_m1
+                ) B ON A.id_digipos = B.id_outlet
+
+                WHERE UPPER(channel) = 'SF CHANNELING'
+                AND $tap
+                AND $hari_pjp";
+
+        $resultQuery = $this->db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+    /*end dashboard */
+
+    /*bot telegram t2*/
     function omset_data_detail_t2($pic,$type,$hari_pjp,$pm,$pm1,$dm,$dm1){
         $pic = $this->db->escape($pic);
         $pm = $this->db->escape($pm);
@@ -224,12 +487,291 @@ class OmsetTrxModel extends Model
 			return $resultQuery->getResultArray();
 		}
     }
+    /*end bot telegram */
+    /*dashboard t2*/
+    function omset_data_detail_dsh_t2($tap,$pic,$type,$hari_pjp,$pm,$pm1,$dm,$dm1){
+        $pm = $this->db->escape($pm);
+        $pm1 = $this->db->escape($pm1);
 
+        $query = "SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+
+                    COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
+                    COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END) oa_trx_m1,
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ) percent_oa_trx_m1,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) trx_m1,
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) rev_m1,
+
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*1.03,0) target_trx,
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*1.03,0) target_rev,
+
+                    COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END) oa_trx_mtd,
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ) percent_oa_trx_mtd,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0) trx_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) rev_mtd,
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) gap_trx,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) gap_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) rev_superseru_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0) rev_hotpromo_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0) rev_other_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0) rev_vas_mtd,
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_superseru,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_hotpromo,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0))/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_other,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0))*100,0),0) percent_rev_cvm
+
+                FROM db_outlet A
+                JOIN (
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM db_profile_outlet_m
+                    UNION ALL
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM db_profile_outlet_m1
+                ) B ON A.id_digipos = B.id_outlet
+
+                WHERE UPPER(channel) = 'SF CHANNELING'
+                AND $tap
+                AND $hari_pjp
+                AND $pic
+
+                GROUP BY id_digipos,outlet,tap,channel,pic,hari_pjp
+
+                UNION ALL
+
+                SELECT
+                    'TOTAL' AS id_digipos,
+                    '' AS outlet,
+                    '' AS tap,
+                    '' AS channel,
+                    '' AS pic,
+                    '' AS hari_pjp,
+
+                    COUNT(CASE WHEN periode = $pm THEN hari_pjp END),
+                    COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END),
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0),
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0),
+
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*1.03,0),
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*1.03,0),
+
+                    COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END),
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0),
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0),
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) gap_trx,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) gap_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) rev_superseru_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0) rev_hotpromo_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0) rev_other_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0) rev_vas_mtd,
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_superseru,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_hotpromo,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0))/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_other,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0))*100,0),0) percent_rev_cvm
+
+                FROM db_outlet A
+                JOIN (
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM bts.db_profile_outlet_m
+                    UNION ALL
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM bts.db_profile_outlet_m1
+                ) B ON A.id_digipos = B.id_outlet
+
+                WHERE UPPER(channel) = 'SF CHANNELING'
+                AND $tap
+                AND $hari_pjp
+                AND $pic";
+
+        $resultQuery = $this->db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+
+    function omset_data_summary_dsh_t2($tap,$type,$hari_pjp,$pm,$pm1,$dm,$dm1){
+        $pm = $this->db->escape($pm);
+        $pm1 = $this->db->escape($pm1);
+
+        $query = "SELECT
+                    tap, channel, pic,
+
+                    COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
+                    COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END) oa_trx_m1,
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ) percent_oa_trx_m1,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) trx_m1,
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) rev_m1,
+
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*1.03,0) target_trx,
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*1.03,0) target_rev,
+
+                    COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END) oa_trx_mtd,
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ) percent_oa_trx_mtd,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0) trx_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) rev_mtd,
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) gap_trx,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) gap_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) rev_superseru_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0) rev_hotpromo_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0) rev_other_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0) rev_vas_mtd,
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_superseru,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_hotpromo,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0))/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_other,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0))*100,0),0) percent_rev_cvm
+
+                FROM db_outlet A
+                JOIN (
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM db_profile_outlet_m
+                    UNION ALL
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM db_profile_outlet_m1
+                ) B ON A.id_digipos = B.id_outlet
+
+                WHERE UPPER(channel) = 'SF CHANNELING'
+                AND $tap
+                AND $hari_pjp
+
+                GROUP BY tap, channel, pic
+
+                UNION ALL
+
+                SELECT
+                    'TOTAL' AS tap,
+                    '' AS channel,
+                    '' AS pic,
+
+                    COUNT(CASE WHEN periode = $pm THEN hari_pjp END),
+                    COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END),
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0),
+                    IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0),
+
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*1.03,0),
+                    ROUND(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*1.03,0),
+
+                    COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END),
+
+                    IFNULL(ROUND(
+                        COUNT(CASE WHEN periode = $pm AND trx_$type > 0 THEN trx_$type END)
+                        / NULLIF(COUNT(CASE WHEN periode = $pm THEN hari_pjp END),0) * 100,0),0
+                    ),
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0),
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0),
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)*103)/100,0))*100,0),0) ach_rev,
+
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0)/$dm1))*100,0),0) rr_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN trx_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_$type END),0) gap_trx,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)
+                    - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_$type END),0) gap_rev,
+
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) rev_superseru_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0) rev_hotpromo_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0) rev_other_mtd,
+                    IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0) rev_vas_mtd,
+
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_superseru,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_hotpromo,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_superseru END),0) - IFNULL(SUM(CASE WHEN periode = $pm THEN rev_hotpromo END),0))/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0))*100,0),0) percent_rev_other,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0))*100,0),0) percent_rev_cvm
+
+                FROM db_outlet A
+                JOIN (
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM bts.db_profile_outlet_m
+                    UNION ALL
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM bts.db_profile_outlet_m1
+                ) B ON A.id_digipos = B.id_outlet
+
+                WHERE UPPER(channel) = 'SF CHANNELING'
+                AND $tap
+                AND $hari_pjp";
+
+        $resultQuery = $this->db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+    /*end dashboard */
+
+    /*bot telegram t3*/
     function omset_data_detail_t3($pic,$hari_pjp,$dm,$dm1,$jenis_produk){
         $pic = $this->db->escape($pic);
 
         $query = "SELECT periode_date,id_digipos,outlet,tap,channel,pic,hari_pjp,
-                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(DISTINCT CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
                 IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
@@ -239,11 +781,11 @@ class OmsetTrxModel extends Model
                 COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
                 IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0) ach_trx,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0) ach_rev,
-                ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/$dm1))*100,0) rr_trx,
-                ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/$dm1))*100,0) rr_rev,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/$dm1))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/$dm1))*100,0),0) rr_rev,
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
                 FROM
@@ -275,11 +817,11 @@ class OmsetTrxModel extends Model
                 COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
                 IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0) ach_trx,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0) ach_rev,
-                ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/$dm1))*100,0) rr_trx,
-                ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/$dm1))*100,0) rr_rev,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/$dm1))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/$dm1))*100,0),0) rr_rev,
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
                 FROM
@@ -296,6 +838,146 @@ class OmsetTrxModel extends Model
 			return $resultQuery->getResultArray();
 		}
     }
+    /*end bot telegram t3*/
+    /*dashboard t3*/
+     function omset_data_detail_dsh_t3($tap,$pic,$hari_pjp,$dm,$dm1,$jenis_produk){
+
+        $query = "SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                COUNT(DISTINCT CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/$dm1))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/$dm1))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,qty,rev
+                FROM db_outlet A
+                JOIN  bts.`db_st_digipos` B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic AND $jenis_produk) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+
+                UNION ALL
+
+                SELECT
+                    'TOTAL' AS id_digipos,
+                    '' AS outlet,
+                    '' AS tap,
+                    '' AS channel,
+                    '' AS pic,
+                    '' AS hari_pjp,
+
+                    COUNT(DISTINCT CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                    COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                    IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                    ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                    ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                    COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                    IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/$dm1))*100,0),0) rr_rev,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                    FROM
+                    (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                    validity,qty,rev
+                    FROM db_outlet A
+                    JOIN  bts.`db_st_digipos` B
+                    ON A.`id_digipos` = B.`id_outlet`
+                    WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic AND $jenis_produk) source";
+
+        $resultQuery = $this->db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+
+    function omset_data_summary_dsh_t3($tap,$type,$hari_pjp,$dm,$dm1,$jenis_produk){
+        $query = "SELECT
+                    tap, channel, pic,
+                    COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                    COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                    IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                    ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                    ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                    COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                    IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/$dm1))*100,0),0) rr_rev,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,qty,rev
+                FROM db_outlet A
+                JOIN  bts.`db_st_digipos` B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND $jenis_produk) source
+                GROUP BY tap, channel, pic
+
+                UNION ALL
+
+                SELECT
+                    'TOTAL' AS tap,
+                    '' AS channel,
+                    '' AS pic,
+
+                    COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                    COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                    IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                    ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                    ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                    COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                    IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                    IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/$dm1))*100,0),0) rr_trx,
+                    IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/$dm)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/$dm1))*100,0),0) rr_rev,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                    IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+
+                FROM  (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,qty,rev
+                FROM db_outlet A
+                JOIN  bts.`db_st_digipos` B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND $jenis_produk) source";
+
+        $resultQuery = $this->db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+    /*end dashboard t3*/
 
     function omset_data_detail_t5($pic,$hari_pjp,$pm,$pm1,$dm,$dm1){
         $pic = $this->db->escape($pic);
@@ -303,7 +985,7 @@ class OmsetTrxModel extends Model
         $pm1 = $this->db->escape($pm1);
 
         $query = "SELECT update_date,A.id_digipos,outlet,tap,channel,pic,hari_pjp,
-                COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
+                COUNT(DISTINCT CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN periode = $pm1 AND trx_dg > 0 THEN trx_dg END) oa_trx_m1,
                 IFNULL(ROUND((COUNT(CASE WHEN periode = $pm1 AND trx_dg > 0 THEN trx_dg END)/COUNT(CASE WHEN periode = $pm THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
                 IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0) trx_m1,
@@ -313,11 +995,11 @@ class OmsetTrxModel extends Model
                 COUNT(CASE WHEN periode = $pm AND trx_dg > 0 THEN trx_dg END) oa_trx_mtd,
                 IFNULL(ROUND((COUNT(CASE WHEN periode = $pm AND trx_dg > 0 THEN trx_dg END)/COUNT(CASE WHEN periode = $pm THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0) trx_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0)*103)/100,0))*100,0) ach_trx,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0)*103)/100,0))*100,0),0) ach_trx,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0) rev_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0)*103)/100,0))*100,0) ach_rev,
-                ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0)/$dm1))*100,0) rr_trx,
-                ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0)/$dm1))*100,0) rr_rev,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0)/$dm1))*100,0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0)/$dm1))*100,0) rr_rev,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0) - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0) gap_trx,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0) - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0) gap_rev
                 FROM
@@ -355,11 +1037,11 @@ class OmsetTrxModel extends Model
                 COUNT(CASE WHEN periode = $pm AND trx_dg > 0 THEN trx_dg END) oa_trx_mtd,
                 IFNULL(ROUND((COUNT(CASE WHEN periode = $pm AND trx_dg > 0 THEN trx_dg END)/COUNT(CASE WHEN periode = $pm THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0) trx_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0)*103)/100,0))*100,0) ach_trx,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0)*103)/100,0))*100,0),0) ach_trx,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0) rev_mtd,
-                ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0)*103)/100,0))*100,0) ach_rev,
-                ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0)/$dm1))*100,0) rr_trx,
-                ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0)/$dm1))*100,0) rr_rev,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0)/ROUND((IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0)/$dm1))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0)/$dm)/(IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0)/$dm1))*100,0),0) rr_rev,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN trx_dg END),0) - IFNULL(SUM(CASE WHEN periode = $pm1 THEN trx_dg END),0) gap_trx,
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_dg END),0) - IFNULL(SUM(CASE WHEN periode = $pm1 THEN rev_dg END),0) gap_rev
                 FROM

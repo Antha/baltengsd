@@ -109,13 +109,13 @@ body,.f-12{
   color: #fff;
 }
 
-.btn-red{
-  background-color: #cc122b;
+.btn-green{
+  background-color: #1aa67d;
   color: #fff;
 }
 
-.btn-red:hover{
-  background-color: #890819;
+.btn-green:hover{
+  background-color: #20c997;
   color: #fff;
   -moz-transition: all 0.4s ease-in-out;
 	-o-transition: all 0.4s ease-in-out;
@@ -142,6 +142,10 @@ body,.f-12{
 .card-header,.bg-red-cstm{
   background-color: #bd2840;
   color: #fff;
+}
+
+#wrap_btn_submit{
+  margin-top: 23px;
 }
 
 .red-text{
@@ -400,5 +404,11 @@ a.ds-menu:hover .ds-menu-icon{
 
 .back-btn a:hover{
   color: #26b5cc;
+}
+
+.bg-total td{
+  font-weight: bold;
+  background-color: #9BC2E6;
+  color: #000;
 }
 
