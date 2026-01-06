@@ -51,7 +51,7 @@ class Omset_trx_dashboard extends BaseController
             $tapCondition = "tap = '".$tap."'";
         }
 
-        $data = $this->model->query_pic_list($tapCondition);
+        $data = query_pic_list($tapCondition);
 
         return $this->response->setJSON($data);
     }
@@ -65,7 +65,7 @@ class Omset_trx_dashboard extends BaseController
              return redirect()->to('/omset_trx');
         }
 
-        $data['tap_list'] = $this->model->query_tap_list(); 
+        $data['tap_list'] = query_tap_list();
 
         $monitoring_list = ['ALL','CVM','DG','RECHARGE','ST VF','ST SA','ST ALL','VAS'];
         //parsing list monitoring ke view
@@ -84,7 +84,7 @@ class Omset_trx_dashboard extends BaseController
         }
 
         //parsing $pic variable
-        $data['pic_list'] = $this->model->query_pic_list($tap); 
+        $data['pic_list'] = query_pic_list($tap); 
         $parse_pic = $this->request->getPost('filter_pic') ?? 'ALL';
          if($parse_pic == "ALL"){
             $pic = "pic != ''";
@@ -151,8 +151,8 @@ class Omset_trx_dashboard extends BaseController
             
         }elseif($type == 'DG'){
             //tampilkan hasil query di view
-            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t5($pic,$hari_pjp,$pm,$pm1,$dm,$dm1);
-            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t5($pic,$hari_pjp,$pm,$pm1,$dm,$dm1);
+            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_dsh_t5($tap,$pic,$hari_pjp,$pm,$pm1,$dm,$dm1);
+            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_dsh_t5($tap,$hari_pjp,$pm,$pm1,$dm,$dm1);
            
         }else{
             //tampilkan hasil query di view

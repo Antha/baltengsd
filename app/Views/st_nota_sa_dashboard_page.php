@@ -15,9 +15,9 @@
                                 </a>
                                 <h5 class="d-inline-block">HOME</h5>
                             </div>
-                            <h3 class="mb-3">OMSET TRX</h3>
+                            <h3 class="mb-3">ST NOTA SA</h3>
                             <div class="filter_group_top">
-                                <form id="filterFormOmsetTrxTop" method="post" action="<?php echo esc(base_url('/omset_trx_dashboard')); ?>" enctype="multipart/form-data">
+                                <form id="filterFormOmsetTrxTop" method="post" action="<?php echo esc(base_url('/st_nota_sa_dashboard')); ?>" enctype="multipart/form-data">
                                     <?= csrf_field() ?>
                                     <div class="row no-gutters">
                                         <div class="form-group col-md-6 col-12">
@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="table_ommset_trx_summary" class="col-12">
+                            <div id="table_st_sa_summary" class="col-12 mb-3">
                                 <div class="table-responsive">
                                     <table id="dataTableTop" class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                         <thead>
@@ -100,12 +100,12 @@
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 150px;">CHANNEL</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="12" class="deep_blue" scope="col">MONITORING <?php echo $parse_type; ?> TRX DIGIPOS</th>
+                                                <th colspan="13" class="deep_blue" scope="col">MMONITORING ST NOTA SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
                                                 <th colspan="4" class="deep_blue" scope="col">HISTORY FM-1</th>
-                                                <th colspan="2" class="deep_blue" scope="col">TARGET</th>
+                                                <th colspan="3" class="deep_blue" scope="col">TARGET</th>
                                                 <th colspan="6" class="deep_blue" scope="col">ACH S/D TANGGAL <?php echo $tgl_update; ?></th>
                                                 <th colspan="2" class="deep_blue" scope="col">RUN RATE</th>
                                                 <th colspan="2" class="deep_blue" scope="col">GAP EOM</th>
@@ -116,6 +116,7 @@
                                                 <th class="deep_blue" scope="col">QTY</th>
                                                 <th class="deep_blue" scope="col">REV</th>
                                                
+                                                <th class="deep_blue" scope="col">OA</th>
                                                 <th class="deep_blue" scope="col">QTY</th>
                                                 <th class="deep_blue" scope="col">REV</th>
 
@@ -134,7 +135,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($query_omset_trx_summary as $rows){ if($rows['tap'] == 'TOTAL'){ ?>   
+                                            <?php foreach($result_trx_summary as $rows){ if($rows['tap'] == 'TOTAL'){?>
                                                 <tr class="bg-total">
                                                     <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td>
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
@@ -142,6 +143,7 @@
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['oa_trx_target']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
@@ -156,7 +158,7 @@
                                                     <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
-                                            <?php foreach($query_omset_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){ ?>   
+                                            <?php foreach($result_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){?>
                                                 <tr>
                                                     <td><?php echo $rows['tap']; ?></td>
                                                     <td><?php echo $rows['channel']; ?></td>
@@ -166,6 +168,7 @@
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['oa_trx_target']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
@@ -195,22 +198,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="table_ommset_trx_detail" class="col-12 mb-5">
+                            <div id="table_st_sa_detail" class="col-12 mb-3">
                                 <div class="table-responsive">
                                     <table id="dataTableBot" class="table table-sm table-bordered table-hover table-responsive table-cstm">
-                                        <thead>
+                                         <thead>
                                             <tr class="text-center align-middle">
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">DIGIPOS</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 180px;">OUTLET</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="12" class="deep_blue" scope="col">MONITORING <?php echo $parse_type; ?> TRX DIGIPOS</th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
                                                 <th colspan="4" class="deep_blue" scope="col">HISTORY FM-1</th>
-                                                <th colspan="2" class="deep_blue" scope="col">TARGET</th>
+                                                <th colspan="3" class="deep_blue" scope="col">TARGET</th>
                                                 <th colspan="6" class="deep_blue" scope="col">ACH S/D TANGGAL <?php echo $tgl_update; ?></th>
                                                 <th colspan="2" class="deep_blue" scope="col">RUN RATE</th>
                                                 <th colspan="2" class="deep_blue" scope="col">GAP EOM</th>
@@ -222,6 +225,7 @@
                                                 <th class="deep_blue" scope="col">QTY</th>
                                                 <th class="deep_blue" scope="col">REV</th>
                                                
+                                                <th class="deep_blue" scope="col">OA</th>
                                                 <th class="deep_blue" scope="col">QTY</th>
                                                 <th class="deep_blue" scope="col">REV</th>
 
@@ -240,14 +244,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($query_omset_trx_detail as $rows){ if($rows['id_digipos'] == 'TOTAL'){ ?>   
+                                            <?php foreach($result_trx_detail as $rows){ if($rows['id_digipos'] == 'TOTAL'){?>
                                                 <tr class="bg-total">
-                                                    <td colspan="4" class="text-center"><?php echo $rows['id_digipos']; ?></td>
+                                                    <td class="text-start" colspan="3"><?php echo $rows['id_digipos']; ?></td>
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['oa_trx_target']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
@@ -262,17 +267,18 @@
                                                     <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
-                                            <?php foreach($query_omset_trx_detail as $rows){ if($rows['id_digipos'] != 'TOTAL'){ ?>   
+                                            <?php foreach($result_trx_detail as $rows){ if($rows['id_digipos'] != 'TOTAL'){?>
                                                 <tr>
-                                                    <td><?php echo $rows['id_digipos']; ?></td>
+                                                    <td class="text-start"><?php echo $rows['id_digipos']; ?></td>
                                                     <td><?php echo $rows['outlet']; ?></td>
-                                                    <td><?php echo $rows['hari_pjp']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['hari_pjp']; ?></td>
                                                     <td ><?php echo $rows['pic']; ?></td>
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['oa_trx_target']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
@@ -298,7 +304,6 @@
             <?= $this->include('/includes/include_footer'); ?>
         </div>      
     </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script>
@@ -309,7 +314,7 @@
             $('#filter_pic').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "<?= base_url('/omset_trx_dashboard/getPicByTap') ?>",
+                url: "<?= base_url('/st_nota_sa_dashboard/getPicByTap') ?>",
                 type: "POST",
                 data: {
                     tap: tap,
@@ -418,7 +423,7 @@
 
         $('#dlImgTop').on('click', function () {
 
-            const wrapper = document.querySelector('#table_ommset_trx_summary .table-responsive');
+            const wrapper = document.querySelector('#table_st_sa_summary .table-responsive');
             const table   = document.querySelector('#dataTableTop');
 
             // SIMPAN style asli
@@ -445,7 +450,7 @@
                 // DOWNLOAD IMAGE
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
-                link.download = `omset_trx_summary_full_${Date.now()}.png`;
+                link.download = `table_st_sa_summary_full_${Date.now()}.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -458,7 +463,7 @@
 
         $('#dlImgBot').on('click', function () {
 
-            const wrapper = document.querySelector('#table_ommset_trx_detail .table-responsive');
+            const wrapper = document.querySelector('#table_st_sa_detail .table-responsive');
             const table   = document.querySelector('#dataTableBot');
 
             // SIMPAN style asli
@@ -485,7 +490,7 @@
                 // DOWNLOAD IMAGE
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
-                link.download = `omset_trx_detail_full_${Date.now()}.png`;
+                link.download = `table_st_sa_detail_full_${Date.now()}.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);

@@ -2,33 +2,48 @@
 
 <?php $this->section('content') ?>
 
-    <div id="main-wrapper" class="login-form min-vh-100 d-flex flex-column bg-body-secondary">
+    <div id="main-wrapper" class="login-form min-vh-100 d-flex flex-column bg-login">
         <div class="container my-auto">
-            <div class="row g-0">
-                <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4 m-auto py-5">
-                    <div class="logo text-center mb-3"> 
-                        <h1>BTS</h1>
+            <div class="row g-0 justify-content-center">
+                <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-8 py-5">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <div class="row justify-content-center">
+                                <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-7 m-auto px-3 py-4 rounded" style="background-color: #fff;">
+                                    <div class="container-fluid">
+                                        <div class="row justify-content-center">
+                                            <div class="col-8">
+                                                <div class="logo text-center mb-3"> 
+                                                    <img src="<?= esc(base_url('/assets/images/logo.png')); ?>" alt="logo" class="img-fluid">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <form id="form-verifikasi">
+                                                    <?= csrf_field() ?>
+                                                    <div class="vertical-input-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control top-input" id="username" required placeholder="Username">
+                                                        </div>
+                                                        <div class="input-group position-relative">
+                                                            <input type="password" class="form-control bot-input" id="password" required placeholder="Password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid my-4">
+                                                        <button class="btn btn-primary shadow-none" type="submit">Login</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p class="lead text-center mb-3">Bali Tengah Satu Data</p>
-                    <form id="form-verifikasi">
-                        <?= csrf_field() ?>
-                        <div class="vertical-input-group">
-                            <div class="input-group">
-                                <input type="text" class="form-control top-input" id="username" required placeholder="Username">
-                            </div>
-                            <div class="input-group position-relative">
-                                <input type="password" class="form-control bot-input" id="password" required placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="d-grid my-4">
-                            <button class="btn btn-primary shadow-none" type="submit">Login</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
         <div class="container-fluid py-2 footer-wrapper">
-            <p class="text-center text-2 text-muted mb-0 copyright">Copyright © 2025 BTS. All Rights Reserved.</p>
+            <p class="text-center text-2 text-muted mb-0 copyright" style="color: #fff !important;">Copyright © 2025 BTS. All Rights Reserved.</p>
         </div>
     </div>
 

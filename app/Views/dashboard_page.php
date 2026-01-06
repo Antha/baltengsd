@@ -9,8 +9,8 @@
                 <div class="col-12 pt-3 pb-2 ps-3 pe-3">
                     <div class="container-fluid rounded main-bg pt-5">
                         <div class="row justify-content-center mt-3">
-                            <div class="col-2 text-center">
-                                <a href="/omset_trx_dashboard" class="d-inline-block border rounded w-100 menu">
+                            <div class="col-6 col-md-3 col-lg-2 text-center mb-4">
+                                <a href="<?= base_url('omset_trx_dashboard') ?>" class="d-inline-block border rounded w-100 menu">
                                     <div class="p-3">
                                         <div class="d-inline-block w-100">
                                             <i class="fa-solid fa-magnifying-glass-chart fs-1"></i>
@@ -20,8 +20,8 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-2 text-center">
-                                <a href="st_nota_sa" class="d-inline-block border rounded w-100 menu">
+                            <div class="col-6 col-sm-3 col-md-3 col-lg-2 text-center mb-4">
+                                <a href="<?= base_url('st_nota_sa_dashboard') ?>" class="d-inline-block border rounded w-100 menu">
                                     <div class="p-3">
                                         <div class="d-inline-block w-100">
                                             <i class="fa-regular fa-note-sticky fs-1"></i>
@@ -31,8 +31,8 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-2 text-center">
-                                <a href="st_nota_vf_byu" class="d-inline-block border rounded w-100 menu">
+                            <div class="col-6 col-sm-3 col-md-3 col-lg-2 text-center mb-4">
+                                <a href="<?= base_url('st_nota_vf_byu_dashboard') ?>" class="d-inline-block border rounded w-100 menu">
                                     <div class="p-3">
                                         <div class="d-inline-block w-100">
                                             <i class="fa-regular fa-note-sticky fs-1"></i>
@@ -42,14 +42,25 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-2 text-center">
-                                <a href="st_nota_vf_sim" class="d-inline-block border rounded w-100 menu">
+                            <div class="col-6 col-sm-3 col-md-3 col-lg-2 text-center mb-4">
+                                <a href="<?= base_url('st_nota_vf_sim_dashboard') ?>" class="d-inline-block border rounded w-100 menu">
                                     <div class="p-3">
                                         <div class="d-inline-block w-100">
                                             <i class="fa-regular fa-note-sticky fs-1"></i>
                                         </div>
                                     
                                         <span class="mt-3 d-inline-block">ST NOTA VF SIM</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 col-sm-3 col-md-3 col-lg-2 text-center mb-4">
+                                <a href="<?= base_url('replace/upload') ?>" class="d-inline-block border rounded w-100 menu">
+                                    <div class="p-3">
+                                        <div class="d-inline-block w-100">
+                                            <i class="fa-solid fa-file-arrow-up fs-1"></i>
+                                        </div>
+                                    
+                                        <span class="mt-3 d-inline-block">UPLOAD DATA</span>
                                     </div>
                                 </a>
                             </div>
