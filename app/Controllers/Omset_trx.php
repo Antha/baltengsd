@@ -45,7 +45,7 @@ class Omset_trx extends BaseController
         //parsing $pic variable
         $pic = "IGST NYOMAN PUTRA CHANDRA BUDI";
         //parsing monitoring variable (ALL,VAS,RECHARGE,CVM,ST VF,ST SA,ST ALL,DG)
-        $parse_type = "RECHARGE";
+        $parse_type = $this->request->getGet('parse_type');
         if($parse_type == "VAS"){
             $type = "PA";
         }else{
@@ -53,7 +53,7 @@ class Omset_trx extends BaseController
         }
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
-        $parse_hari_pjp = "SELASA";
+        $parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{

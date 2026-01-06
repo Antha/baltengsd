@@ -15,7 +15,6 @@
                                         <div class="d-inline-block w-100">
                                             <i class="fa-solid fa-magnifying-glass-chart fs-1"></i>
                                         </div>
-                                    
                                         <span class="mt-3 d-inline-block">OMZET TRX</span>
                                     </div>
                                 </a>
