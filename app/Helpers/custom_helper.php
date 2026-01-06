@@ -189,20 +189,6 @@
 			return $x;
 		}
 	}
-	
-    /* end of region*/
-    function cekUpdateDate($var_date,$var_db){
-        //connectin DB
-        $db = \Config\Database::connect('srv200');
-
-        $sql = "SELECT MAX($var_date) AS MAX_DATE FROM $var_db";
-        $query = $db->query($sql);
-        if($query){
-            return $query->getResultArray();
-        }else{
-            return $db->error();
-        }
-    }
 
 	#Day in Indonesian
 	function day_indo($date)
@@ -249,4 +235,26 @@
 			return number_format($percent, $decimals) . $suffix;
 		}
 	}
+	function query_pic_list($tap){
+		$db = \Config\Database::connect();
+        $query = "SELECT 'ALL' pic FROM db_outlet 
+                UNION 
+                SELECT pic FROM db_outlet WHERE channel = 'SF CHANNELING' AND $tap GROUP BY pic";
+
+        $resultQuery = $db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
+
+    function query_tap_list(){
+		$db = \Config\Database::connect('default');
+        $query = "SELECT 'ALL' tap FROM db_outlet 
+                UNION SELECT tap FROM db_outlet GROUP BY tap";
+
+        $resultQuery = $db->query($query);
+		if($resultQuery){
+			return $resultQuery->getResultArray();
+		}
+    }
 ?>

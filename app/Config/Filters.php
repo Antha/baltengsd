@@ -37,6 +37,7 @@ class Filters extends BaseFilters
 
         // Tambahkan ini
         'auth' => \App\Filters\Auth::class,
+        'admin' => \App\Filters\AdminFilter::class,
     ];
 
     /**

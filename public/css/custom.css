@@ -6,6 +6,12 @@
 .clr-teal{
   color: #20c997;
 }
+.bg-login{
+  background-image: url("/assets/images/bg-baltengsatudata.jpg");
+}
+.bg-top-navbar{
+  background-image: url("/assets/images/bg-top-navbar.jpg");
+}
 .main-bg{
   background-color: white;
   box-shadow: 6px 3px 6px -2px rgba(92,92,92,0.75);
@@ -56,7 +62,7 @@ body,.f-12{
     width: 50px;
     height: 50px;
     border: 6px solid #ccc;
-    border-top-color: #890819;
+    border-top-color: #20c997;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -66,33 +72,7 @@ body,.f-12{
         transform: rotate(360deg);
     }
 }
-.full_bg {
-  background-image: url("/assets/images/bg_red1.png");
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  background-repeat: no-repeat;     /* Jangan ulangi gambar */
-  min-height: 100vh;                /* Set tinggi minimal 100% layar */
-  z-index: 1;
-}
 
-.full_bg .bg-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white; /* atau warna lain untuk efek */
-  opacity: 0.2; /* Gunakan opacity untuk overlay, bukan background */
-  z-index: -1;
-}
-
-.shadow-cstm1{
-  /*box-shadow:  3px 3px 15px #803c3c;*/
-  box-shadow: 10px 10px 18px #803e3e;
-  -webkit-box-shadow: 10px 10px 18px #803e3e;
-  -moz-box-shadow: 10px 10px 18px #803e3e;
-}
 
 .btn-block{
   display: block;
@@ -105,7 +85,7 @@ body,.f-12{
 }
 
 .btn:disabled{
-  background-color: #890819;
+  background-color: #1aa67d;
   color: #fff;
 }
 
@@ -125,7 +105,6 @@ body,.f-12{
 }
 
 .btn-logout{
-  color: #000;
   font-weight: bold;
   transition: color 0.1s ease;
 }
