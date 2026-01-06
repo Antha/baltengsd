@@ -232,9 +232,9 @@ class OmsetTrxModel extends Model
 
                 FROM db_outlet A
                 JOIN (
-                    SELECT periode,id_outlet,trx_$type,rev_$type FROM bts.db_profile_outlet_m
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM db_profile_outlet_m
                     UNION ALL
-                    SELECT periode,id_outlet,trx_$type,rev_$type FROM bts.db_profile_outlet_m1
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM db_profile_outlet_m1
                 ) B ON A.id_digipos = B.id_outlet
 
                 WHERE UPPER(channel) = 'SF CHANNELING'
@@ -350,9 +350,9 @@ class OmsetTrxModel extends Model
 
                 FROM db_outlet A
                 JOIN (
-                    SELECT periode,id_outlet,trx_$type,rev_$type FROM bts.db_profile_outlet_m
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM db_profile_outlet_m
                     UNION ALL
-                    SELECT periode,id_outlet,trx_$type,rev_$type FROM bts.db_profile_outlet_m1
+                    SELECT periode,id_outlet,trx_$type,rev_$type FROM db_profile_outlet_m1
                 ) B ON A.id_digipos = B.id_outlet
 
                 WHERE UPPER(channel) = 'SF CHANNELING'
@@ -592,9 +592,9 @@ class OmsetTrxModel extends Model
 
                 FROM db_outlet A
                 JOIN (
-                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM bts.db_profile_outlet_m
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM db_profile_outlet_m
                     UNION ALL
-                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM bts.db_profile_outlet_m1
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM db_profile_outlet_m1
                 ) B ON A.id_digipos = B.id_outlet
 
                 WHERE UPPER(channel) = 'SF CHANNELING'
@@ -729,9 +729,9 @@ class OmsetTrxModel extends Model
 
                 FROM db_outlet A
                 JOIN (
-                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM bts.db_profile_outlet_m
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM db_profile_outlet_m
                     UNION ALL
-                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM bts.db_profile_outlet_m1
+                    SELECT periode,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa FROM db_profile_outlet_m1
                 ) B ON A.id_digipos = B.id_outlet
 
                 WHERE UPPER(channel) = 'SF CHANNELING'
@@ -1148,9 +1148,9 @@ class OmsetTrxModel extends Model
 
                 FROM db_outlet A
                 JOIN (
-                    SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg FROM bts.db_profile_outlet_m
+                    SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg FROM db_profile_outlet_m
                     UNION ALL
-                    SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg FROM bts.db_profile_outlet_m1
+                    SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg FROM db_profile_outlet_m1
                 ) B ON A.id_digipos = B.id_outlet
 
                 WHERE UPPER(channel) = 'SF CHANNELING'
@@ -1265,9 +1265,9 @@ class OmsetTrxModel extends Model
 
                 FROM db_outlet A
                 JOIN (
-                    SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg FROM bts.db_profile_outlet_m
+                    SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg FROM db_profile_outlet_m
                     UNION ALL
-                    SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg FROM bts.db_profile_outlet_m1
+                    SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg FROM db_profile_outlet_m1
                 ) B ON A.id_digipos = B.id_outlet
 
                 WHERE UPPER(channel) = 'SF CHANNELING'
