@@ -143,8 +143,7 @@ class Omset_trx_dashboard extends BaseController
             }
 
             $data['query_omset_trx_detail'] = $this->model->omset_data_detail_dsh_t3($tap,$pic,$hari_pjp,$dm_dg,$dm1_dg,$jenis_produk);
-            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_dsh_t3($tap,$pic,$hari_pjp,$dm_dg,$dm1_dg,$jenis_produk);
-            
+            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_dsh_t3($tap,$pic,$hari_pjp,$dm_dg,$dm1_dg,$jenis_produk);    
         }elseif($type == 'CVM'){
             $data['query_omset_trx_detail'] = $this->model->omset_data_detail_dsh_t2($tap,$pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1);
             $data['query_omset_trx_summary'] = $this->model->omset_data_summary_dsh_t2($tap,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1);

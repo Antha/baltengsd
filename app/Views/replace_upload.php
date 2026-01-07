@@ -9,16 +9,11 @@
                 <div class="col-12 pt-3 pb-2 ps-3 pe-3">
                     <div class="container-fluid rounded main-bg pt-3">
                         <div class="row mt-1">
-                            <div class="back-btn mb-3">
-                                <a href="/home">
-                                    <i class="fa-solid fa-circle-left me-1" style="font-size: 20px;"></i>
-                                </a>
-                                <h5 class="d-inline-block">HOME</h5>
-                            </div>
+                            <?= $this->include('/includes/include_breadcrumb'); ?>
                             <h3 class="mb-3">REPLACE DATA</h3>
                             <div class="container-fluid mt-5">
                                 <div class="row justify-content-center">
-                                    <div class="col-8 col-md-8 col-lg-8 col-xl-8 border rounded px-3 py-4 filter_group_top">
+                                    <div class="col-8 col-md-8 col-lg-8 col-xl-8 border rounded px-3 py-4 filter_group_top bg-body-secondary">
                                         <form method="post" action="<?= base_url('replace/preview') ?>" enctype="multipart/form-data" onsubmit="return validateCSV()">
                                             <?= csrf_field() ?>
 

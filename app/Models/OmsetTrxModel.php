@@ -819,10 +819,10 @@ class OmsetTrxModel extends Model
     }
     /*end bot telegram t3*/
     /*dashboard t3*/
-     function omset_data_detail_dsh_t3($tap,$pic,$hari_pjp,$dm,$dm1,$jenis_produk){
+    function omset_data_detail_dsh_t3($tap,$pic,$hari_pjp,$dm,$dm1,$jenis_produk){
 
         $query = "SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
-                COUNT(DISTINCT CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
                 IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
@@ -841,11 +841,11 @@ class OmsetTrxModel extends Model
                 IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
                 FROM
                 (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
-                validity,qty,rev
+                validity,SUM(qty) qty,sum(rev) rev
                 FROM db_outlet A
                 JOIN  db_st_digipos B
                 ON A.`id_digipos` = B.`id_outlet`
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND pic = $pic AND $jenis_produk) source
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND $pic AND $jenis_produk GROUP BY id_digipos,outlet,hari_pjp,pic,grouping_periode) source
                 GROUP BY id_digipos,outlet,hari_pjp,pic
 
                 UNION ALL
@@ -858,7 +858,7 @@ class OmsetTrxModel extends Model
                     '' AS pic,
                     '' AS hari_pjp,
 
-                    COUNT(DISTINCT CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                    COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
                     COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
                     IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
                     IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
@@ -877,11 +877,11 @@ class OmsetTrxModel extends Model
                     IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
                     FROM
                     (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
-                    validity,qty,rev
+                    validity,SUM(qty) qty,SUM(rev) rev
                     FROM db_outlet A
                     JOIN  db_st_digipos B
                     ON A.`id_digipos` = B.`id_outlet`
-                    WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND pic = $pic AND $jenis_produk) source";
+                    WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND $pic AND $jenis_produk GROUP BY id_digipos,outlet,hari_pjp,pic,grouping_periode) source";
 
         $resultQuery = $this->db->query($query);
 		if($resultQuery){
@@ -912,11 +912,11 @@ class OmsetTrxModel extends Model
 
                 FROM
                 (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
-                validity,qty,rev
+                validity,SUM(qty) qty,SUM(rev) rev
                 FROM db_outlet A
                 JOIN  db_st_digipos B
                 ON A.`id_digipos` = B.`id_outlet`
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND $jenis_produk) source
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND $jenis_produk GROUP BY id_digipos,outlet,hari_pjp,pic,grouping_periode) source
                 GROUP BY tap, channel, pic
 
                 UNION ALL
@@ -949,7 +949,7 @@ class OmsetTrxModel extends Model
                 FROM db_outlet A
                 JOIN  db_st_digipos B
                 ON A.`id_digipos` = B.`id_outlet`
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND $jenis_produk) source";
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND $jenis_produk GROUP BY id_digipos,outlet,hari_pjp,pic,grouping_periode) source";
 
         $resultQuery = $this->db->query($query);
 		if($resultQuery){

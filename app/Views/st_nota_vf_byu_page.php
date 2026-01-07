@@ -9,12 +9,7 @@
                 <div class="col-12 pt-3 pb-2 ps-3 pe-3">
                     <div class="container-fluid rounded main-bg pt-3">
                         <div class="row mt-1">
-                            <div class="back-btn mb-3">
-                                <a href="/home">
-                                    <i class="fa-solid fa-circle-left me-1" style="font-size: 20px;"></i>
-                                </a>
-                                <h5 class="d-inline-block">HOME</h5>
-                            </div>
+                            <?= $this->include('/includes/include_breadcrumb'); ?>
                             <h3 class="mb-3">ST NOTA VF BYU</h3>
                             <div id="table_st_nota_vf_summary" class="col-12 mb-3">
                                 <div class="table-responsive">
