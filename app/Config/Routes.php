@@ -39,4 +39,5 @@ $routes->group('replace', ['filter' => 'admin'], function ($routes) {
     $routes->get('upload', 'ReplaceData::upload');
     $routes->post('preview', 'ReplaceData::preview');
     $routes->post('confirm', 'ReplaceData::confirm');
+    $routes->post('download/sample', 'DownloadSample::sampleTablePost');
 });
