@@ -81,7 +81,7 @@ class Auth extends BaseController
                 'isUser' => TRUE
             ]);
 
-            return $this->response->setJSON(['status' => true, 'redirect' => base_url('/home')]);
+            return $this->response->setJSON(['status' => true, 'redirect' => base_url('home')]);
         } else {
             return $this->response->setJSON(['status' => false, 'message' => 'Maaf, user tidak ditemukan']);
         }
@@ -90,7 +90,7 @@ class Auth extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/');
+        return redirect()->to('auth');
     }
 
 }
