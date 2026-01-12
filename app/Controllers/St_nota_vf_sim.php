@@ -15,6 +15,8 @@ class St_nota_vf_sim extends BaseController
     }
     public function index()
     {
+        $idtel = $this->request->getGet('parse_idtel');
+
         //parsing $pic variable
         $pic = "I MADE KURNIAWAN HERNAWANTA";
         //parsing monitoring variable (1D,2D,3D,5D,7D,30D,ALL)
@@ -40,8 +42,8 @@ class St_nota_vf_sim extends BaseController
         $data['parse_type'] = $parse_validity;
         $data['hari_pjp'] = $parse_hari_pjp;
 
-        $data['result_trx_summary'] = $this->model->data_summary($pic,$validity,$hari_pjp,$dm,$dm1);
-        $data['result_trx_detail'] = $this->model->data_detail($pic,$validity,$hari_pjp,$dm,$dm1);
+        $data['result_trx_summary'] = $this->model->data_summary($pic,$validity,$hari_pjp,$dm,$dm1,$idtel);
+        $data['result_trx_detail'] = $this->model->data_detail($pic,$validity,$hari_pjp,$dm,$dm1,$idtel);
 
         return view('st_nota_vf_sim_page',$data);
         

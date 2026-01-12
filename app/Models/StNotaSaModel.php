@@ -14,7 +14,6 @@ class StNotaSaModel extends Model
     }
 
     function get_latest_update_date_st_digipos(){
-
         $query = "SELECT MAX(CASE WHEN grouping_periode = 'M' THEN periode_date END) update_date_m, 
                 MAX(CASE WHEN grouping_periode = 'M-1' THEN periode_date END) update_date_m1
                 FROM db_st_digipos";
@@ -24,7 +23,7 @@ class StNotaSaModel extends Model
     }
 
     /*query bot telegram */
-    function data_detail($pic,$nama_produk,$hari_pjp,$dm,$dm1){
+    function data_detail($pic,$nama_produk,$hari_pjp,$dm,$dm1,$idtel){
         $pic = $this->db->escape($pic);
 
         $query = "SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
@@ -49,7 +48,7 @@ class StNotaSaModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic)A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
                 JOIN 
                 (SELECT id_outlet, grouping_periode, SUM(qty) qty, SUM(rev) rev
                 FROM db_st_nota
@@ -70,7 +69,7 @@ class StNotaSaModel extends Model
 		}
     }
 
-    function data_summary($pic,$nama_produk,$hari_pjp,$dm,$dm1){
+    function data_summary($pic,$nama_produk,$hari_pjp,$dm,$dm1,$idtel){
         $pic = $this->db->escape($pic);
 
         $query = "SELECT tap,channel,pic,hari_pjp,
@@ -95,7 +94,7 @@ class StNotaSaModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = $pic)A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
                 JOIN 
                 (SELECT id_outlet, grouping_periode, SUM(qty) qty, SUM(rev) rev
                 FROM db_st_nota

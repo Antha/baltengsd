@@ -16,6 +16,7 @@ class St_nota_sa extends BaseController
 
     public function index()
     {
+        $idtel = $this->request->getGet('parse_idtel');
         //parsing $pic variable
         $pic = "FATIR FATAHILA ILHAM";
         //parsing tipe produk variable (SIMPATI,ESIM,BYU,ALL DENO)
@@ -45,8 +46,8 @@ class St_nota_sa extends BaseController
         $data['parse_type'] = $tipe_produk;
         $data['hari_pjp'] = $parse_hari_pjp;
 
-        $data['result_trx_summary'] = $this->model->data_summary($pic,$nama_produk,$hari_pjp,$dm,$dm1);
-        $data['result_trx_detail'] = $this->model->data_detail($pic,$nama_produk,$hari_pjp,$dm,$dm1);
+        $data['result_trx_summary'] = $this->model->data_summary($pic,$nama_produk,$hari_pjp,$dm,$dm1,$idtel);
+        $data['result_trx_detail'] = $this->model->data_detail($pic,$nama_produk,$hari_pjp,$dm,$dm1,$idtel);
 
         return view('st_nota_sa_page',$data);
         

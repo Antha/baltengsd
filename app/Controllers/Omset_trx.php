@@ -42,6 +42,8 @@ class Omset_trx extends BaseController
     
     public function index()
     {
+        $idtel = $this->request->getGet('parse_idtel');
+
         //parsing $pic variable
         $pic = "IGST NYOMAN PUTRA CHANDRA BUDI";
         //parsing monitoring variable (ALL,VAS,RECHARGE,CVM,ST VF,ST SA,ST ALL,DG)
@@ -89,22 +91,22 @@ class Omset_trx extends BaseController
                 $jenis_produk = "jenis_produk IN('SMART AKUISISI','VOUCHER FISIK')";
             }
 
-            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t3($pic,$hari_pjp,$dm_dg,$dm1_dg,$jenis_produk);
-            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t3($pic,$hari_pjp,$dm_dg,$dm1_dg,$jenis_produk);
+            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t3($pic,$hari_pjp,$dm_dg,$dm1_dg,$jenis_produk,$idtel);
+            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t3($pic,$hari_pjp,$dm_dg,$dm1_dg,$jenis_produk,$idtel);
             return view('omset_trx_page_sts',$data);
         }elseif($type == 'CVM'){
-            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t2($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1);
-            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t2($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1);
+            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t2($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1,$idtel);
+            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t2($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1,$idtel);
             return view('omset_trx_page_cvm',$data);
         }elseif($type == 'DG'){
             //tampilkan hasil query di view
-            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t5($pic,$hari_pjp,$pm,$pm1,$dm,$dm1);
-            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t5($pic,$hari_pjp,$pm,$pm1,$dm,$dm1);
+            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t5($pic,$hari_pjp,$pm,$pm1,$dm,$dm1,$idtel);
+            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t5($pic,$hari_pjp,$pm,$pm1,$dm,$dm1,$idtel);
             return view('omset_trx_page',$data);
         }else{
             //tampilkan hasil query di view
-            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t1($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1);
-            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t1($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1);
+            $data['query_omset_trx_detail'] = $this->model->omset_data_detail_t1($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1,$idtel);
+            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t1($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1,$idtel);
             return view('omset_trx_page',$data);
         }
     }
