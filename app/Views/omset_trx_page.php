@@ -124,10 +124,8 @@
                                                 <th class="deep_blue" scope="col">%ACH</th>
                                                 <th class="deep_blue" scope="col">REV</th>
                                                 <th class="deep_blue" scope="col">%ACH</th>
-
                                                 <th class="deep_blue" scope="col">QTY</th>
                                                 <th class="deep_blue" scope="col">REV</th>
-
                                                 <th class="deep_blue" scope="col">QTY</th>
                                                 <th class="deep_blue" scope="col">REV</th>
                                             </tr>
