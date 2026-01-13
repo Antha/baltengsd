@@ -68,7 +68,15 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type
                 FROM db_profile_outlet_m
@@ -110,7 +118,15 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp  AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type
                 FROM db_profile_outlet_m
@@ -399,9 +415,18 @@ class OmsetTrxModel extends Model
                 IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0) rev_vas_mtd,
                 IFNULL(ROUND((IFNULL(SUM(CASE WHEN periode = $pm THEN rev_$type END),0)/IFNULL(SUM(CASE WHEN periode = $pm THEN rev_pa END),0))*100,0),0) percent_rev_cvm
                 FROM
-                (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
-                FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
+                (
+                    SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
+                    FROM db_outlet
+                    WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                )   A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa
                 FROM db_profile_outlet_m
@@ -451,7 +476,15 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa
                 FROM db_profile_outlet_m
@@ -773,7 +806,16 @@ class OmsetTrxModel extends Model
                 FROM db_outlet A
                 JOIN  baltengsatudata_balteng.`db_st_digipos` B
                 ON A.`id_digipos` = B.`id_outlet`
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel') AND $jenis_produk) source
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                    AND $jenis_produk
+                ) source
                 GROUP BY id_digipos,outlet,hari_pjp,pic";
 
         $resultQuery = $this->db->query($query);
@@ -810,7 +852,16 @@ class OmsetTrxModel extends Model
                 FROM db_outlet A
                 JOIN  baltengsatudata_balteng.`db_st_digipos` B
                 ON A.`id_digipos` = B.`id_outlet`
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel') AND $jenis_produk) source
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp 
+                AND (
+                    (
+                        (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                        OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                    )
+                    OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                )
+                AND $jenis_produk
+                ) source
                 GROUP BY tap,channel,pic,hari_pjp";
 
         $resultQuery = $this->db->query($query);
@@ -985,7 +1036,16 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp 
+                    AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg
                 FROM db_profile_outlet_m
@@ -1027,7 +1087,16 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp 
+                    AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg
                 FROM db_profile_outlet_m

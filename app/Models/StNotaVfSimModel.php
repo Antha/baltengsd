@@ -47,7 +47,15 @@ class StNotaVfSimModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                )A
                 JOIN 
                 (SELECT id_outlet, grouping_periode, SUM(qty) qty, SUM(rev) rev
                 FROM db_st_nota
@@ -93,7 +101,15 @@ class StNotaVfSimModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND pic = ( SELECT SF_Name FROM db_telegram where Id_Telegram = '$idtel'))A
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
+                    (
+                        (
+                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
+                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
+                        )
+                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
+                    ) 
+                )A
                 JOIN 
                 (SELECT id_outlet, grouping_periode, SUM(qty) qty, SUM(rev) rev
                 FROM db_st_nota
