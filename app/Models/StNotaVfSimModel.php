@@ -4,6 +4,8 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+use App\Models\ToolsModel;
+
 class StNotaVfSimModel extends Model
 {
     protected $db;
@@ -24,6 +26,9 @@ class StNotaVfSimModel extends Model
 
     function data_detail($pic,$validity,$hari_pjp,$dm,$dm1,$idtel){
         $pic = $this->db->escape($pic);
+
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
 
         $query = "SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
                 COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
@@ -47,14 +52,7 @@ class StNotaVfSimModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter
                 )A
                 JOIN 
                 (SELECT id_outlet, grouping_periode, SUM(qty) qty, SUM(rev) rev
@@ -79,6 +77,9 @@ class StNotaVfSimModel extends Model
     function data_summary($pic,$validity,$hari_pjp,$dm,$dm1,$idtel){
         $pic = $this->db->escape($pic);
 
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
+
         $query = "SELECT tap,channel,pic,hari_pjp,
                 COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
@@ -101,14 +102,7 @@ class StNotaVfSimModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter
                 )A
                 JOIN 
                 (SELECT id_outlet, grouping_periode, SUM(qty) qty, SUM(rev) rev
