@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\OmsetTrxModel;
+use App\Models\ToolsModel;
+
 helper(['custom_helper']);
 
 class Omset_trx extends BaseController
@@ -42,6 +44,7 @@ class Omset_trx extends BaseController
     
     public function index()
     {
+    
         $idtel = $this->request->getGet('parse_idtel');
 
         //parsing $pic variable

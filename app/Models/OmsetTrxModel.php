@@ -4,6 +4,8 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+use App\Models\ToolsModel;
+
 class OmsetTrxModel extends Model
 {
     protected $db;
@@ -47,6 +49,9 @@ class OmsetTrxModel extends Model
         $pm = $this->db->escape($pm);
         $pm1 = $this->db->escape($pm1);
 
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
+
         $query = "SELECT update_date,A.id_digipos,outlet,tap,channel,pic,hari_pjp,
                 COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END) oa_trx_m1,
@@ -68,14 +73,7 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter
                 )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type
@@ -96,6 +94,9 @@ class OmsetTrxModel extends Model
         $pic = $this->db->escape($pic);
         $pm = $this->db->escape($pm);
         $pm1 = $this->db->escape($pm1);
+
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
 
         $query = "SELECT tap,channel,pic,
                 COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
@@ -118,14 +119,7 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter
                 )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type
@@ -388,6 +382,9 @@ class OmsetTrxModel extends Model
         $pm = $this->db->escape($pm);
         $pm1 = $this->db->escape($pm1);
 
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
+
         $query = "SELECT update_date,A.id_digipos,outlet,tap,channel,pic,hari_pjp,
                 COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN periode = $pm1 AND trx_$type > 0 THEN trx_$type END) oa_trx_m1,
@@ -418,14 +415,7 @@ class OmsetTrxModel extends Model
                 (
                     SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                     FROM db_outlet
-                    WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
+                    WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter
                 )   A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa
@@ -446,6 +436,9 @@ class OmsetTrxModel extends Model
         $pic = $this->db->escape($pic);
         $pm = $this->db->escape($pm);
         $pm1 = $this->db->escape($pm1);
+
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
 
         $query = "SELECT tap,channel,pic,hari_pjp,
                 COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
@@ -476,14 +469,7 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter
                 )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,trx_$type,rev_$type,rev_superseru,rev_hotpromo,rev_pa
@@ -782,6 +768,15 @@ class OmsetTrxModel extends Model
     function omset_data_detail_t3($pic,$hari_pjp,$dm,$dm1,$jenis_produk,$idtel){
         $pic = $this->db->escape($pic);
 
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
+
+        // $message = $optionFilter." \nLog dicatat pada: " . date('Y-m-d H:i:s') . PHP_EOL;
+        // // Path ke folder writable
+        // $path = WRITEPATH . 'custom_log.txt';
+        // // Tulis ke file
+        // file_put_contents($path, $message, FILE_APPEND);
+
         $query = "SELECT periode_date,id_digipos,outlet,tap,channel,pic,hari_pjp,
                 COUNT(DISTINCT CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
@@ -806,15 +801,7 @@ class OmsetTrxModel extends Model
                 FROM db_outlet A
                 JOIN  baltengsatudata_balteng.`db_st_digipos` B
                 ON A.`id_digipos` = B.`id_outlet`
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
-                    AND $jenis_produk
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter AND $jenis_produk
                 ) source
                 GROUP BY id_digipos,outlet,hari_pjp,pic";
 
@@ -827,6 +814,9 @@ class OmsetTrxModel extends Model
 
     function omset_data_summary_t3($pic,$hari_pjp,$dm,$dm1,$jenis_produk,$idtel){
         $pic = $this->db->escape($pic);
+
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
 
         $query = "SELECT tap,channel,pic,hari_pjp,
                 COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
@@ -852,15 +842,7 @@ class OmsetTrxModel extends Model
                 FROM db_outlet A
                 JOIN  baltengsatudata_balteng.`db_st_digipos` B
                 ON A.`id_digipos` = B.`id_outlet`
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp 
-                AND (
-                    (
-                        (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                        OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                    )
-                    OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                )
-                AND $jenis_produk
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter AND $jenis_produk
                 ) source
                 GROUP BY tap,channel,pic,hari_pjp";
 
@@ -1015,6 +997,9 @@ class OmsetTrxModel extends Model
         $pm = $this->db->escape($pm);
         $pm1 = $this->db->escape($pm1);
 
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
+
         $query = "SELECT update_date,A.id_digipos,outlet,tap,channel,pic,hari_pjp,
                 COUNT(DISTINCT CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN periode = $pm1 AND trx_dg > 0 THEN trx_dg END) oa_trx_m1,
@@ -1036,15 +1021,7 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp 
-                    AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter
                 )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg
@@ -1065,6 +1042,9 @@ class OmsetTrxModel extends Model
         $pic = $this->db->escape($pic);
         $pm = $this->db->escape($pm);
         $pm1 = $this->db->escape($pm1);
+
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
 
         $query = "SELECT tap,channel,pic,
                 COUNT(CASE WHEN periode = $pm THEN hari_pjp END) or_trx,
@@ -1087,15 +1067,7 @@ class OmsetTrxModel extends Model
                 FROM
                 (SELECT id_digipos,outlet,tap,channel,pic,hari_pjp
                 FROM db_outlet
-                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp 
-                    AND 
-                    (
-                        (
-                            (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%manager%'
-                            OR (SELECT Role FROM db_telegram WHERE Id_Telegram = '$idtel') LIKE '%gm%'
-                        )
-                        OR pic = (SELECT SF_NAME FROM db_telegram WHERE Id_Telegram = '$idtel')
-                    ) 
+                WHERE UPPER(channel) = 'SF CHANNELING' AND $hari_pjp $optionFilter
                 )A
                 JOIN 
                 (SELECT periode,update_date,id_outlet,(trx_recharge + trx_pa) trx_dg, (rev_recharge + rev_pa) rev_dg
