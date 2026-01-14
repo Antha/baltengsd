@@ -257,4 +257,16 @@
 			return $resultQuery->getResultArray();
 		}
     }
+
+	function query_verify_user_telegram($user_id){
+		$db = \Config\Database::connect('default');
+		$user_id = $db->escape($user_id);
+
+        $query = "SELECT Id_Telegram FROM db_telegram WHERE Id_Telegram = $user_id";
+
+        $resultQuery = $db->query($query);
+		if($resultQuery){
+			 if($resultQuery)return $resultQuery->getRowArray();
+		}
+    }
 ?>
