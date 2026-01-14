@@ -41,3 +41,6 @@ $routes->group('replace', ['filter' => 'admin'], function ($routes) {
     $routes->post('confirm', 'ReplaceData::confirm');
     $routes->post('download/sample', 'DownloadSample::sampleTablePost');
 });
+//telegram
+$routes->post('api/telegram/verify', 'Api\Telegram::verify');
+
