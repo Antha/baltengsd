@@ -4,6 +4,7 @@ namespace App\Controllers\API;
 
 use App\Controllers\BaseController;
 use App\Models\TelegramAuthModel;
+use App\Models\TelegramDataModel;
 
 class Telegram extends BaseController
 {
@@ -68,6 +69,34 @@ class Telegram extends BaseController
                 'status' => false,
                 'message' => 'Telegram user not registered'
             ])->setStatusCode(404);
+        }
+    }
+
+    public function sf_list()
+    {
+        /* ===============================
+         * Get User List
+         * =============================== */
+
+        $model = new TelegramDataModel();
+
+        $sf_list = $model->query_sf_list();
+
+        if (!empty($sf_list)) {
+            return $this->response ->setStatusCode(200)
+            ->setJSON([
+                'status' => true,
+                'message' => 'SF List Available',
+                'sf_list' => $sf_list
+            ]);
+        } else {
+            return $this->response
+            ->setStatusCode(404)
+            ->setJSON([
+                'status'  => false,
+                'message' => 'SF List not available',
+                'sf_list' => []
+            ]);
         }
     }
 }

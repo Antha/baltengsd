@@ -30,6 +30,7 @@ class ToolsModel extends Model
 
         switch ($role) {
             case "GM CLUSTER":
+            case "MANAGER":
             case "MANAGER CLUSTER":
             case "MANAGER SUPPORT":
             case "BRANCH":
@@ -37,8 +38,7 @@ class ToolsModel extends Model
                 break;
 
             case "MANAGER TAP":
-            case "MANAGER TAP DPS":
-            case "MANAGER":
+            //case "MANAGER TAP DPS":
             case "TL IDS":
             case "ADMIN SF":
             case "ADMIN IDS":

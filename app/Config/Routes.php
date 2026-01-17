@@ -33,6 +33,22 @@ $routes->group('',['filter' => 'auth'], function($routes){
     $routes->get('st_nota_sa', 'St_nota_sa::index');
     $routes->get('st_nota_vf_byu', 'St_nota_vf_byu::index');
     $routes->get('st_nota_vf_sim', 'St_nota_vf_sim::index');
+
+    $routes->get('omset_trx/summary_all', 'Omset_trx::summary_all');
+    $routes->get('omset_trx/summary_by_outlet', 'Omset_trx::summary_by_outlet');
+    $routes->get('omset_trx/summary_by_sf', 'Omset_trx::summary_by_sf');
+
+    $routes->get('st_nota_sa/summary_all', 'St_nota_sa::summary_all');
+    $routes->get('st_nota_sa/summary_by_outlet', 'St_nota_sa::summary_by_outlet');
+    $routes->get('st_nota_sa/summary_by_sf', 'St_nota_sa::summary_by_sf');
+
+    $routes->get('st_nota_vf_byu/summary_all', 'St_nota_vf_byu::summary_all');
+    $routes->get('st_nota_vf_byu/summary_by_outlet', 'St_nota_vf_byu::summary_by_outlet');
+    $routes->get('st_nota_vf_byu/summary_by_sf', 'St_nota_vf_byu::summary_by_sf');
+
+    $routes->get('st_nota_vf_sim/summary_all', 'St_nota_vf_sim::summary_all');
+    $routes->get('st_nota_vf_sim/summary_by_outlet', 'St_nota_vf_sim::summary_by_outlet');
+    $routes->get('st_nota_vf_sim/summary_by_sf', 'St_nota_vf_sim::summary_by_sf');
 });
 
 $routes->group('replace', ['filter' => 'admin'], function ($routes) {
@@ -44,5 +60,5 @@ $routes->group('replace', ['filter' => 'admin'], function ($routes) {
 
 //telegram
 $routes->post('api/telegram/verify', 'API\Telegram::verify');
-
+$routes->get('api/telegram/sf_list', 'API\Telegram::sf_list');
 ?>
