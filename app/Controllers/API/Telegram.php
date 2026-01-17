@@ -80,7 +80,10 @@ class Telegram extends BaseController
 
         $model = new TelegramDataModel();
 
-        $sf_list = $model->query_sf_list();
+        $idtel = '1163748435';//hapus & ganti dengan data idtsel dari user yg mengakses modul
+        //$idtel = $this->request->getGet('parse_idtel');
+
+        $sf_list = $model->query_sf_list($idtel);
 
         if (!empty($sf_list)) {
             return $this->response ->setStatusCode(200)
