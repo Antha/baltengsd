@@ -2,6 +2,40 @@
 
 <?php $this->section('content') ?>
 
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        thead th {
+            position: sticky;
+            background: white;   /* supaya tidak transparan */
+            z-index: 2;          /* pastikan di atas isi tabel */
+        }
+
+        /* baris pertama header */
+        thead tr:nth-child(1) th {
+            top: 0;
+        }
+
+        /* baris kedua header */
+        thead tr:nth-child(2) th {
+            top: 27px;   /* sesuaikan dengan tinggi baris pertama */
+        }
+
+        /* baris ketiga header */
+        thead tr:nth-child(3) th {
+            top: 55px;   /* sesuaikan dengan tinggi baris pertama+kedua */
+        }
+
+        .table-responsive {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+    </style>
+
     <div id="main-wrapper" class="dashboard-page min-vh-100 d-flex flex-column">
         <?= $this->include('/includes/include_top_navbar'); ?>      
         <div class="container-fluid menu-dashboard bg-body-secondary">
@@ -13,7 +47,7 @@
                             <h3 class="mb-3">ST NOTA SA</h3>
 
                             <div id="table_st_sa_detail" class="col-12 mb-3">
-                                <div class="table-responsive">
+                                <div class="table-responsive mytable">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                          <thead>
                                             <tr class="text-center align-middle">

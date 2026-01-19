@@ -139,7 +139,7 @@ class St_nota_sa extends BaseController
         return view('st_nota_sa_page_v3',$data);
         
     }
-
+    
     public function summary_by_sf()
     {
         #$idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
