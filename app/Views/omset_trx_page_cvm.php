@@ -90,8 +90,8 @@
                                                     <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_trx']); ?></td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_superseru_mtd']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_hotpromo_mtd']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_other_mtd']); ?></td>
@@ -189,8 +189,8 @@
                                                     <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_trx']); ?></td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_superseru_mtd']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_hotpromo_mtd']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_other_mtd']); ?></td>
