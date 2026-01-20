@@ -126,7 +126,7 @@ class StNotaVfByuModel extends Model
         $toolsModel = new ToolsModel();
         $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
 
-        $query = "SELECT tap,channel,pic,hari_pjp,
+        $query = "SELECT tap,channel,pic,
                 COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
                 IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M-1' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
@@ -162,11 +162,11 @@ class StNotaVfByuModel extends Model
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
                 ON  B.id_outlet = C.id_outlet
-                GROUP BY tap,channel,pic,hari_pjp
+                GROUP BY tap,channel,pic
                 
                 UNION ALL
                 
-                SELECT 'TOTAL' tap,'' channel,'' pic,'' hari_pjp,
+                SELECT 'TOTAL' tap, '' channel, '' pic,
                 COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
                 COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
                 IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M-1' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  

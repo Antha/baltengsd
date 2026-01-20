@@ -126,8 +126,7 @@ class StNotaSaModel extends Model
 
     function data_summary_all($nama_produk,$hari_pjp,$dm,$dm1,$idtel){
         $toolsModel = new ToolsModel();
-        //$optionFilter = $toolsModel->getFilterByTelegramId($idtel);
-        $optionFilter = "AND pic = 'FATIR FATAHILA ILHAM'";
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
 
         $query = "SELECT tap,channel,pic,hari_pjp,
                 COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
