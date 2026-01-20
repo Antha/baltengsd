@@ -122,12 +122,12 @@ class Omset_trx extends BaseController
         $pic = '';
 
         //example :
-        $idtel = '1026383114';
+        #$idtel = '1026383114';
         $idtel = $this->request->getGet('parse_idtel');
 
         //parsing monitoring variable (ALL,VAS,RECHARGE,CVM,ST VF,ST SA,ST ALL,DG)
         //example :
-        $parse_type = 'DG';
+        #$parse_type = 'ST VF';
         $parse_type = $this->request->getGet('parse_type');
         if($parse_type == "VAS"){
             $type = "PA";
@@ -137,7 +137,7 @@ class Omset_trx extends BaseController
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
          //example :
-        $parse_hari_pjp = 'ALL';
+        #$parse_hari_pjp = 'ALL';
         $parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
@@ -184,7 +184,11 @@ class Omset_trx extends BaseController
             return view('omset_trx_page_v2',$data);
         }else{
             //tampilkan hasil query di view
-            $data['query_omset_trx_summary'] = $this->model->omset_data_summary_t1_all($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1,$idtel);
+            $result = $this->model->omset_data_summary_t1_all($pic,strtolower($type),$hari_pjp,$pm,$pm1,$dm,$dm1,$idtel);
+
+            $data['cek_result'] = empty($result) ? 'no result' : 'result available';
+            $data['query_omset_trx_summary'] =  $result;
+            
             return view('omset_trx_page_v2',$data);
         }
     }
@@ -194,11 +198,11 @@ class Omset_trx extends BaseController
         $pic = '';
 
         //example :
-        $idOutlet = '3300013682';
+        #$idOutlet = '3300013682';
         $idOutlet = $this->request->getGet('parse_idoutlet');
 
         //example :
-        $idtel = '1105537644';
+        #$idtel = '1105537644';
         $idtel = $this->request->getGet('parse_idtel');
 
         $parse_type = $this->request->getGet('parse_type');
@@ -213,9 +217,9 @@ class Omset_trx extends BaseController
         //example :
         $parse_hari_pjp = "ALL";//FIX
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
-         //example :
-        $parse_hari_pjp = 'SENIN';
-        $parse_hari_pjp =  $this->request->getGet('parse_hari');
+        //example :
+        #$parse_hari_pjp = 'SENIN';
+        #$parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{
@@ -279,7 +283,7 @@ class Omset_trx extends BaseController
 
     public function summary_by_sf()
     {
-        $idtel = '1026383114';
+        #$idtel = '1026383114';
         $idtel = $this->request->getGet('parse_idtel');
 
         //parsing $pic variable
@@ -295,7 +299,7 @@ class Omset_trx extends BaseController
         }
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
-        $parse_hari_pjp = 'RABU';
+        #$parse_hari_pjp = 'RABU';
         $parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";

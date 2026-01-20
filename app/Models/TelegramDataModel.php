@@ -15,7 +15,7 @@ class TelegramDataModel extends Model
         $toolsModel = new ToolsModel();
         $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
 
-        $query = "SELECT sf_name FROM db_telegram WHERE `role` = 'SF' $optionFilter";
+        $query = "SELECT sf_name FROM db_telegram WHERE `role` IN('SF','CANVASSER') $optionFilter";
 
         return $this->db->query($query)->getResultArray();
     }

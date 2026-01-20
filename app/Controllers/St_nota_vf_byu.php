@@ -52,12 +52,12 @@ class St_nota_vf_byu extends BaseController
 
     public function summary_all()
     {
-        #$idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
-        $idtel = $this->request->getGet('parse_idtel');
+        $idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
+        #$idtel = $this->request->getGet('parse_idtel');
 
         //parsing monitoring variable (1D,14D,30D,ALL)
-        #$parse_validity = "30D";//hapus & ganti dengan data validity dari input user
-        $parse_validity =  $this->request->getGet('parse_type');
+        $parse_validity = "30D";//hapus & ganti dengan data validity dari input user
+        #$parse_validity =  $this->request->getGet('parse_type');
         if($parse_validity == "ALL"){
             $validity = "";
         }else{
@@ -65,8 +65,8 @@ class St_nota_vf_byu extends BaseController
         }
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
-        #$parse_hari_pjp = "SENIN";//hapus & ganti dengan data hari dari input user
-        $parse_hari_pjp =  $this->request->getGet('parse_hari');
+        $parse_hari_pjp = "ALL";//hapus & ganti dengan data hari dari input user
+        #$parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{

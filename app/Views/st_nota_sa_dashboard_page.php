@@ -149,8 +149,8 @@
                                                     <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_trx']); ?></td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
                                             <?php foreach($result_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){?>
@@ -174,8 +174,8 @@
                                                     <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_trx']); ?></td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
                                         </tbody>
@@ -241,7 +241,7 @@
                                         <tbody>
                                             <?php foreach($result_trx_detail as $rows){ if($rows['id_digipos'] == 'TOTAL'){?>
                                                 <tr class="bg-total">
-                                                    <td class="text-start" colspan="3"><?php echo $rows['id_digipos']; ?></td>
+                                                    <td class="text-start" colspan="4"><?php echo $rows['id_digipos']; ?></td>
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
@@ -258,8 +258,8 @@
                                                     <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_trx']); ?></td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
                                             <?php foreach($result_trx_detail as $rows){ if($rows['id_digipos'] != 'TOTAL'){?>
@@ -284,8 +284,8 @@
                                                     <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
                                                     <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_trx']); ?></td>
-                                                    <td class="text-end"><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
                                         </tbody>
