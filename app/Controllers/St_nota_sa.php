@@ -60,11 +60,12 @@ class St_nota_sa extends BaseController
 
     public function summary_all()
     {
-        $idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
-        //$idtel = $this->request->getGet('parse_idtel');
+        #$idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
+        $idtel = $this->request->getGet('parse_idtel');
 
         //parsing tipe produk variable (SIMPATI,ESIM,BYU,ALL DENO)
-        $tipe_produk = "ALL DENO";//hapus & ganti dengan data tipe report dari input user
+        #$tipe_produk = "ALL DENO";//hapus & ganti dengan data tipe report dari input user
+        $tipe_produk = $this->request->getGet('parse_type');
         if($tipe_produk == "SIMPATI"){
             $nama_produk = "AND nama_produk = 'SIMPATI' AND tipe_produk = 'SIM'";
         }elseif($tipe_produk == "ESIM"){
@@ -76,8 +77,8 @@ class St_nota_sa extends BaseController
         }
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
-        $parse_hari_pjp = "SENIN";//hapus & ganti dengan data hari dari input user
-        //$parse_hari_pjp =  $this->request->getGet('parse_hari');
+        #$parse_hari_pjp = "SENIN";//hapus & ganti dengan data hari dari input user
+        $parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{
@@ -102,15 +103,15 @@ class St_nota_sa extends BaseController
     public function summary_by_outlet()
     {
         $idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
-        //$idtel = $this->request->getGet('parse_idtel');
+        $idtel = $this->request->getGet('parse_idtel');
 
         //parsing $id_outlet
         $idOutlet = "3300013682";//hapus & ganti dengan  data id outlet dari input user
-        //$idOutlet = $this->request->getGet('parse_id_outlet');
+        $idOutlet = $this->request->getGet('parse_idoutlet');
 
         //parsing tipe produk variable (SIMPATI,ESIM,BYU,ALL DENO)
         $tipe_produk = "ALL DENO";//hapus & ganti dengan data tipe report dari input user
-        //$tipe_produk = $this->request->getGet('parse_tipe_produk');
+        $tipe_produk = $this->request->getGet('parse_type');
         if($tipe_produk == "SIMPATI"){
             $nama_produk = "AND nama_produk = 'SIMPATI' AND tipe_produk = 'SIM'";
         }elseif($tipe_produk == "ESIM"){
@@ -123,7 +124,8 @@ class St_nota_sa extends BaseController
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
         $parse_hari_pjp = "ALL";//FIX
-
+        
+        $parse_hari_pjp =  $this->request->getGet('parse_hari');
         $query_update_date_st_digipos = $this->model->get_latest_update_date_st_digipos();
         $dm = date("d",strtotime($query_update_date_st_digipos['update_date_m']));
         $dm1 = date("d",strtotime($query_update_date_st_digipos['update_date_m1']));
@@ -137,19 +139,19 @@ class St_nota_sa extends BaseController
         return view('st_nota_sa_page_v3',$data);
         
     }
-
+    
     public function summary_by_sf()
     {
-        $idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
-        //$idtel = $this->request->getGet('parse_idtel');
+        #$idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
+        $idtel = $this->request->getGet('parse_idtel');
 
         //parsing $pic variable
-        $pic = "FATIR FATAHILA ILHAM";//hapus & ganti dengan data pic dari input user
-        //$pic = $this->request->getGet('parse_sf_name');
+        #$pic = "FATIR FATAHILA ILHAM";//hapus & ganti dengan data pic dari input user
+        $pic = $this->request->getGet('parse_sf');
 
         //parsing tipe produk variable (SIMPATI,ESIM,BYU,ALL DENO)
-        $tipe_produk = "ALL DENO";//hapus & ganti dengan data tipe report dari input user
-        //$tipe_produk = $this->request->getGet('parse_tipe_produk');
+        #$tipe_produk = "ALL DENO";//hapus & ganti dengan data tipe report dari input user
+        $tipe_produk = $this->request->getGet('parse_tipe_produk');
         if($tipe_produk == "SIMPATI"){
             $nama_produk = "AND nama_produk = 'SIMPATI' AND tipe_produk = 'SIM'";
         }elseif($tipe_produk == "ESIM"){
@@ -161,8 +163,8 @@ class St_nota_sa extends BaseController
         }
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
-        $parse_hari_pjp = "SENIN";//hapus & ganti dengan data hari dari input user
-        //$parse_hari_pjp =  $this->request->getGet('parse_hari');
+        #$parse_hari_pjp = "SENIN";//hapus & ganti dengan data hari dari input user
+        $parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{

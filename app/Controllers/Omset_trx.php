@@ -123,12 +123,12 @@ class Omset_trx extends BaseController
 
         //example :
         $idtel = '1026383114';
-        //$idtel = $this->request->getGet('parse_idtel');
+        $idtel = $this->request->getGet('parse_idtel');
 
         //parsing monitoring variable (ALL,VAS,RECHARGE,CVM,ST VF,ST SA,ST ALL,DG)
         //example :
         $parse_type = 'DG';
-        //$parse_type = $this->request->getGet('parse_type');
+        $parse_type = $this->request->getGet('parse_type');
         if($parse_type == "VAS"){
             $type = "PA";
         }else{
@@ -138,7 +138,7 @@ class Omset_trx extends BaseController
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
          //example :
         $parse_hari_pjp = 'ALL';
-        //$parse_hari_pjp =  $this->request->getGet('parse_hari');
+        $parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{
@@ -195,26 +195,27 @@ class Omset_trx extends BaseController
 
         //example :
         $idOutlet = '3300013682';
-        //$idOutlet = $this->request->getGet('parse_idoutlet');
+        $idOutlet = $this->request->getGet('parse_idoutlet');
 
         //example :
         $idtel = '1105537644';
-        //$idtel = $this->request->getGet('parse_idtel');
+        $idtel = $this->request->getGet('parse_idtel');
 
-        //parsing monitoring variable (ALL,VAS,RECHARGE,CVM,ST VF,ST SA,ST ALL,DG)
-        //example :
-        $parse_type = 'ALL';
-        //$parse_type = $this->request->getGet('parse_type');
+        $parse_type = $this->request->getGet('parse_type');
+        $parse_type = 'ST SA';
         if($parse_type == "VAS"){
             $type = "PA";
         }else{
             $type =  $parse_type;
         }
 
+        //parsing monitoring variable (ALL,VAS,RECHARGE,CVM,ST VF,ST SA,ST ALL,DG)
+        //example :
+        $parse_hari_pjp = "ALL";//FIX
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
          //example :
         $parse_hari_pjp = 'SENIN';
-        //$parse_hari_pjp =  $this->request->getGet('parse_hari');
+        $parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{
@@ -279,12 +280,13 @@ class Omset_trx extends BaseController
     public function summary_by_sf()
     {
         $idtel = '1026383114';
-        //$idtel = $this->request->getGet('parse_idtel');
+        $idtel = $this->request->getGet('parse_idtel');
 
         //parsing $pic variable
-        $pic = "IGST NYOMAN PUTRA CHANDRA BUDI";
+        #$pic = "IGST NYOMAN PUTRA CHANDRA BUDI";
+        $pic = $this->request->getGet('parse_sf');
         //parsing monitoring variable (ALL,VAS,RECHARGE,CVM,ST VF,ST SA,ST ALL,DG)
-        //$parse_type = $this->request->getGet('parse_type');
+        $parse_type = $this->request->getGet('parse_type');
         $parse_type = 'ST SA';
         if($parse_type == "VAS"){
             $type = "PA";
@@ -294,7 +296,7 @@ class Omset_trx extends BaseController
 
         //parsing hari_pjp variable (ALL, SENIN - SABTU)
         $parse_hari_pjp = 'RABU';
-        //$parse_hari_pjp =  $this->request->getGet('parse_hari');
+        $parse_hari_pjp =  $this->request->getGet('parse_hari');
         if($parse_hari_pjp == "ALL"){
             $hari_pjp = "UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')";
         }else{
