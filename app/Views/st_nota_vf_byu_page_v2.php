@@ -12,7 +12,7 @@
                             <?= $this->include('/includes/include_breadcrumb'); ?>
                             <h3 class="mb-3">ST NOTA VF BYU</h3>
                             <div id="table_st_nota_vf_summary" class="col-12 mb-3">
-                                <div class="table-responsive">
+                                <div class="table-responsive mytable">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">

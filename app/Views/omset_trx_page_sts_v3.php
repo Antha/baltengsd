@@ -13,7 +13,7 @@
                             <h3 class="mb-3">OMSET TRX</h3>
 
                             <div id="table_ommset_trx_detail" class="col-12 mt-3 mb-5">
-                                <div class="table-responsive">
+                                <div class="table-responsive mytable">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">

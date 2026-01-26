@@ -22,11 +22,44 @@
     <!-- STYLES -->
     <link rel="stylesheet" href="<?php echo base_url('/bootstrap/css/bootstrap.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('/css/custom.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('/css/sticky.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
 </head>
 <body class="fade-in">
     <?= $this->include('/includes/loading_spinner'); ?>
 
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        thead th {
+            position: sticky;
+            background: white;   /* supaya tidak transparan */
+            z-index: 2;          /* pastikan di atas isi tabel */
+        }
+
+        /* baris pertama header */
+        thead tr:nth-child(1) th {
+            top: 0;
+        }
+
+        /* baris kedua header */
+        thead tr:nth-child(2) th {
+            top: 27px;   /* sesuaikan dengan tinggi baris pertama */
+        }
+
+        /* baris ketiga header */
+        thead tr:nth-child(3) th {
+            top: 55px;   /* sesuaikan dengan tinggi baris pertama+kedua */
+        }
+
+        .table-responsive {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+    </style>
     <?= $this->renderSection('content'); ?>
 
     <script>
