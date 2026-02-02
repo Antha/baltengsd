@@ -16,9 +16,9 @@
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 120px;">TAP</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 180px;">CHANNEL</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">TAP</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">CHANNEL</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
                                                 <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VOUCHER FISIK <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>

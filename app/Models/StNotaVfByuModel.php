@@ -379,7 +379,9 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet";
+                ON  B.id_outlet = C.id_outlet
+                
+                ORDER BY hari_pjp DESC";
 
         $resultQuery = $this->db->query($query);
 		if($resultQuery){

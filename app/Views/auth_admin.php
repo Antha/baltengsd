@@ -57,7 +57,9 @@
 
                 let username = $('#username').val().trim();
                 let password = $('#password').val().trim();
+                //token csrf untuk security
                 let csrfTokenName = '<?= csrf_token() ?>';
+                //ini untuk encrypt csrf
                 let csrfHash = $('input[name="<?= csrf_token() ?>"]').val();
 
                 // Validasi username: hanya huruf dan angka

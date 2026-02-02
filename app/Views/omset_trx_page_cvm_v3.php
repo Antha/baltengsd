@@ -16,11 +16,11 @@
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 120px;">DIGIPOS</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 180px;">OUTLET</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">DIGIPOS</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">OUTLET</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 50px;">OR</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">SALES FORCE</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">OR</th>
                                                 <th colspan="12" class="deep_blue" scope="col">MONITORING <?php echo $parse_type; ?> TRX DIGIPOS</th>
                                                 <th colspan="4" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                                 <th colspan="6" class="deep_green" scope="col">CVM CONT</th>
