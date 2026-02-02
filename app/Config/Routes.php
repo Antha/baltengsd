@@ -55,6 +55,9 @@ $routes->group('replace', ['filter' => 'admin'], function ($routes) {
     $routes->get('upload', 'ReplaceData::upload');
     $routes->post('preview', 'ReplaceData::preview');
     $routes->post('confirm', 'ReplaceData::confirm');
+    $routes->get('startImport', 'ReplaceData::startImport');
+    $routes->post('startimport', 'ReplaceData::startImport');
+    $routes->get('processImport/(:num)', 'ReplaceData::processImport/$1');
     $routes->post('download/sample', 'DownloadSample::sampleTablePost');
 });
 

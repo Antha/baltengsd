@@ -71,7 +71,7 @@ class Auth extends BaseController
         $get_password = trim($this->request->getPost('password'));
 
         $model = new AuthModel();
-        $data = $model->where('username', $get_username)->first();
+        $data = $model->where('username', $get_username)->first();//untuk mengambil username yang cocok
 
         if (password_verify($get_password, $data['password'])) {
             session()->set([

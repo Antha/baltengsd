@@ -17,9 +17,9 @@
                                         <thead>
                                             <tr class="text-center align-middle">
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">DIGIPOS</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 180px;">OUTLET</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">OUTLET</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
                                                 <th colspan="12" class="deep_blue" scope="col">MONITORING <?php echo $parse_type; ?> TRX DIGIPOS</th>
                                                 <th rowspan="2" colspan="2" class="deep_blue" scope="col">RUN RATE</th>

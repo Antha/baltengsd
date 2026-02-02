@@ -12,12 +12,20 @@ class ReplaceDataModel extends Model
         'db_profile_outlet_m1',
         'db_sales_plan',
         'db_st_digipos',
-        'db_st_nota'
+        'db_st_nota',
+        'import_jobs'
     ];
 
     public function isAllowedTable(string $table): bool
     {
-        return in_array($table, $this->allowedTables);
+        return in_array($table, $this->allowedTables, true);
+    }
+
+    protected function assertAllowed(string $table): void
+    {
+        if (!$this->isAllowedTable($table)) {
+            throw new \InvalidArgumentException('Table not allowed');
+        }
     }
 
     public function getTableColumns(string $table): array
@@ -42,20 +50,36 @@ class ReplaceDataModel extends Model
 
     public function backupTable(string $table): string
     {
+        if (!$this->isAllowedTable($table)) {
+            throw new \InvalidArgumentException('Table not allowed');
+        }
+
         $backupTable = $table . '_backup_' . date('Ymd_His');
 
-        $this->db->query("CREATE TABLE {$backupTable} AS SELECT * FROM {$table}");
+        $this->db->query("CREATE TABLE {$backupTable} LIKE {$table}");
+        $this->db->query("INSERT INTO {$backupTable} SELECT * FROM {$table}");
 
         return $backupTable;
     }
 
-    public function replaceData(string $table, array $rows): bool
+    public function insertBatchDynamic(string $table, array $data)
     {
-        $this->db->transStart();
-        $this->db->table($table)->truncate();
-        $this->db->table($table)->insertBatch($rows);
-        $this->db->transComplete();
+        $this->assertAllowed($table);
+        
+        if (empty($data)) {
+            return false;
+        }
 
-        return $this->db->transStatus();
+        return $this->db
+            ->table($table)
+            ->insertBatch($data);
     }
+
+    public function truncateTable(string $table)
+    {
+        $this->assertAllowed($table);
+
+        return $this->db->table($table)->truncate();
+    }
+
 }
