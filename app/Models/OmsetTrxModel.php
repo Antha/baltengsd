@@ -1490,6 +1490,14 @@ class OmsetTrxModel extends Model
                 
                 ORDER BY hari_pjp DESC";
 
+        // Catat query mentah ke writable/custom_log.txt
+        file_put_contents(
+            WRITEPATH . 'custom_log.txt',
+            date('Y-m-d H:i:s') . " | " . $query . PHP_EOL,
+            FILE_APPEND
+        );
+
+
         $resultQuery = $this->db->query($query);
 
 		if($resultQuery){
@@ -1563,6 +1571,13 @@ class OmsetTrxModel extends Model
                     WHERE UPPER(channel) = 'SF CHANNELING' AND $tap AND $hari_pjp AND $pic AND $jenis_produk GROUP BY id_digipos,outlet,hari_pjp,pic,grouping_periode) source";
 
         $resultQuery = $this->db->query($query);
+
+        file_put_contents(
+            'custom_log.txt',
+            date('Y-m-d H:i:s') . " | " . $query . PHP_EOL,
+            FILE_APPEND
+        );
+
 		if($resultQuery){
 			return $resultQuery->getResultArray();
 		}
