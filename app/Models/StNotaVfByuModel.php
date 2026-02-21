@@ -63,7 +63,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet
+                ON A.id_digipos = C.id_outlet
                 GROUP BY id_digipos,outlet,tap,channel,pic,hari_pjp";
 
         $resultQuery = $this->db->query($query);
@@ -112,7 +112,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet
+                ON A.id_digipos = C.id_outlet
                 GROUP BY tap,channel,pic,hari_pjp";
 
         $resultQuery = $this->db->query($query);
@@ -161,7 +161,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet
+                ON  A.id_digipos = C.id_outlet
                 GROUP BY tap,channel,pic
                 
                 UNION ALL
@@ -201,7 +201,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet";
+                ON A.id_digipos = C.id_outlet";
 
         $resultQuery = $this->db->query($query);
 		if($resultQuery){
@@ -250,7 +250,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet
+                ON A.id_digipos = C.id_outlet
                 GROUP BY id_digipos,outlet,tap,channel,pic,hari_pjp
                 
                 UNION ALL
@@ -290,7 +290,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet";
+                ON A.id_digipos = C.id_outlet";
 
         $resultQuery = $this->db->query($query);
 		if($resultQuery){
@@ -339,7 +339,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet
+                ON A.id_digipos = C.id_outlet
                 GROUP BY id_digipos,outlet,tap,channel,pic,hari_pjp
                 
                 UNION ALL
@@ -379,7 +379,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet
+                ON A.id_digipos = C.id_outlet
                 
                 ORDER BY hari_pjp DESC";
 
@@ -425,7 +425,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet
+                ON A.id_digipos = C.id_outlet
                 GROUP BY id_digipos,outlet,tap,channel,pic,hari_pjp
                 
                 UNION ALL
@@ -464,7 +464,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet";
+                ON A.id_digipos = C.id_outlet";
 
         $resultQuery = $this->db->query($query);
 		if($resultQuery){
@@ -508,7 +508,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet
+                ON A.id_digipos = C.id_outlet
                 GROUP BY tap,channel,pic
                 
                 UNION ALL
@@ -547,7 +547,7 @@ class StNotaVfByuModel extends Model
                 FROM db_sales_plan
                 WHERE jenis_produk = 'VOUCHER FISIK' AND nama_produk = 'BYU' $validity
                 GROUP BY id_outlet)C
-                ON  B.id_outlet = C.id_outlet";
+                ON A.id_digipos = C.id_outlet";
 
         $resultQuery = $this->db->query($query);
 		if($resultQuery){

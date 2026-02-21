@@ -88,14 +88,14 @@
                             </div>
                             <div id="table_st_sa_summary" class="col-12 mb-3">
                                 <div class="table-responsive">
-                                    <table id="dataTableTop" class="table table-sm table-bordered table-hover table-responsive table-cstm">
+                                    <table id="dataTableTop" class="table table-sm table-bordered table-hover table-cstm">
                                         <thead>
-                                            <tr class="text-center align-middle">
+                                            <tr class="text-center align-middle deep_blue">
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 150px;">TAP</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 150px;">CHANNEL</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MMONITORING ST NOTA SMART AQUITITION <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
@@ -133,8 +133,8 @@
                                             <?php foreach($result_trx_summary as $rows){ if($rows['tap'] == 'TOTAL'){?>
                                                 <tr class="bg-total">
                                                     <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td>
-                                                    <td class="text-center"><?php echo $rows['or_trx']; ?></td>
-                                                    <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
@@ -154,10 +154,15 @@
                                                 </tr>
                                             <?php }} ?>
                                             <?php foreach($result_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){?>
-                                                <tr>
-                                                    <td><?php echo $rows['tap']; ?></td>
-                                                    <td><?php echo $rows['channel']; ?></td>
-                                                    <td ><?php echo $rows['pic']; ?></td>
+                                                <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
+                                                    <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
+                                                        <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
+                                                    <?php }else{ ?>
+                                                        <td><?php echo $rows['tap']; ?></td>
+                                                        <td><?php echo $rows['channel']; ?></td>
+                                                        <td ><?php echo $rows['pic']; ?></td>
+                                                    <?php } ?>
+                                                   
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
@@ -241,7 +246,7 @@
                                         <tbody>
                                             <?php foreach($result_trx_detail as $rows){ if($rows['id_digipos'] == 'TOTAL'){?>
                                                 <tr class="bg-total">
-                                                    <td class="text-start" colspan="4"><?php echo $rows['id_digipos']; ?></td>
+                                                    <td class="text-center" colspan="4"><?php echo $rows['id_digipos']; ?></td>
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>

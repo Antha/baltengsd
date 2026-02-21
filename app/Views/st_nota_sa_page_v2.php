@@ -20,7 +20,7 @@
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">CHANNEL</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MMONITORING ST NOTA SMART AQUITITION <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
@@ -80,10 +80,14 @@
                                                     </tr>
                                                 <?php }} ?>
                                                 <?php foreach($result_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){?>
-                                                    <tr>
-                                                        <td><?php echo $rows['tap']; ?></td>
-                                                        <td><?php echo $rows['channel']; ?></td>
-                                                        <td ><?php echo $rows['pic']; ?></td>
+                                                     <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
+                                                        <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
+                                                            <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
+                                                        <?php }else{ ?>
+                                                            <td><?php echo $rows['tap']; ?></td>
+                                                            <td><?php echo $rows['channel']; ?></td>
+                                                            <td ><?php echo $rows['pic']; ?></td>
+                                                        <?php } ?>
                                                         <td class="text-center"><?php echo $rows['or_trx']; ?></td>
                                                         <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                         <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
