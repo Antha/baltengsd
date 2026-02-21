@@ -59,6 +59,10 @@
             max-height: 500px;
             overflow-y: auto;
         }
+
+        .table.table-responsive {
+            margin-bottom: 340px !important;
+        }
     </style>
     <?= $this->renderSection('content'); ?>
 
