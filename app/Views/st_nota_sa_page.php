@@ -114,7 +114,7 @@
                             </div>
 
                             <div id="table_st_sa_detail" class="col-12 mb-3">
-                                <div class="table-responsive">
+                                <div class="table-responsive mytable">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                          <thead>
                                             <tr class="text-center align-middle">

@@ -88,14 +88,14 @@
                             </div>
                             <div id="table_st_nota_vf_simpati_summary" class="col-12 mb-3">
                                 <div class="table-responsive">
-                                    <table id="dataTableTop" class="table table-sm table-bordered table-hover table-responsive table-cstm">
+                                    <table id="dataTableTop" class="table table-sm table-bordered table-hover table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 150px;">TAP</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 150px;">CHANNEL</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VOUCHER FISIK <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VF SIMPATI <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
@@ -154,10 +154,14 @@
                                                 </tr>
                                             <?php }} ?>
                                             <?php foreach($result_trx_summary as $rows){if($rows['tap'] != 'TOTAL'){  ?>
-                                                <tr>
-                                                    <td><?php echo $rows['tap']; ?></td>
-                                                    <td><?php echo $rows['channel']; ?></td>
-                                                    <td ><?php echo $rows['pic']; ?></td>
+                                                <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
+                                                    <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
+                                                        <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
+                                                    <?php }else{ ?>
+                                                        <td><?php echo $rows['tap']; ?></td>
+                                                        <td><?php echo $rows['channel']; ?></td>
+                                                        <td ><?php echo $rows['pic']; ?></td>
+                                                    <?php } ?>
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>

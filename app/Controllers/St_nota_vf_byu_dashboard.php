@@ -87,10 +87,10 @@ class St_nota_vf_byu_dashboard extends BaseController
         $data['selected_pic'] = $parse_pic;
         $data['selected_tap'] = $parse_tap;
 
-        $query_update_date_st_digipos = $this->model->get_latest_update_date_st_digipos();
-        $dm = date("d",strtotime($query_update_date_st_digipos['update_date_m']));
-        $dm1 = date("d",strtotime($query_update_date_st_digipos['update_date_m1']));
-        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_digipos['update_date_m'])));
+        $query_update_date_st_nota = $this->model->get_latest_update_date_st_nota();
+        $dm = date("d",strtotime($query_update_date_st_nota['update_date_m']));
+        $dm1 = date("d",strtotime($query_update_date_st_nota['update_date_m1']));
+        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_nota['update_date_m'])));
         $data['parse_type'] = $parse_validity;
         $data['hari_pjp'] = $parse_hari_pjp;
 
