@@ -289,7 +289,6 @@ class Omset_trx extends BaseController
         $pic = $this->request->getGet('parse_sf');
         //parsing monitoring variable (ALL,VAS,RECHARGE,CVM,ST VF,ST SA,ST ALL,DG)
         $parse_type = $this->request->getGet('parse_type');
-        $parse_type = 'ST SA';
         if($parse_type == "VAS"){
             $type = "PA";
         }else{
@@ -319,6 +318,14 @@ class Omset_trx extends BaseController
         $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($update_date_m)));
         $data['hari_pjp'] = $parse_hari_pjp;
         $data['parse_type'] = $parse_type; 
+
+        // Catat query mentah ke writable/custom_log.txt
+        file_put_contents(
+            WRITEPATH . 'custom_log.txt',
+            date('Y-m-d H:i:s') . " | " . $type . PHP_EOL,
+            FILE_APPEND
+        );
+
 
 
         if($type == 'ST VF' || $type == 'ST SA' || $type == 'ST ALL'){
