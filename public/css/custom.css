@@ -148,6 +148,10 @@ body,.f-12{
  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.1);
 }
 
+table {
+    border-collapse: collapse !important;
+}
+
 .table-wrapper-scroll-y {
   position: relative;
   height: 500px;
@@ -165,7 +169,8 @@ body,.f-12{
   z-index: 10;
 }
 
-.table-cstm thead tr th.deep_blue{
+.table-cstm thead tr th.deep_blue,
+.table-cstm thead tr.deep_blue th{
   background-color: #1F4E78;
   color: #fff;
 }
