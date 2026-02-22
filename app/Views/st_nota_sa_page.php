@@ -110,7 +110,7 @@
                                             <?php }} ?>
                                         </tbody>
                                     </table>
-                                 </div>
+                                </div>
                             </div>
 
                             <div id="table_st_sa_detail" class="col-12 mb-3">

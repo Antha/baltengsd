@@ -1,7 +1,6 @@
 <?php $this->extend('/templates/template_main') ?>
 
 <?php $this->section('content') ?>
-
     <div id="main-wrapper" class="dashboard-page min-vh-100 d-flex flex-column">
         <?= $this->include('/includes/include_top_navbar'); ?>      
         <div class="container-fluid menu-dashboard bg-body-secondary">
@@ -10,17 +9,19 @@
                     <div class="container-fluid rounded main-bg pt-3">
                         <div class="row mt-1">
                             <?= $this->include('/includes/include_breadcrumb'); ?>
-                            <h3 class="mb-3">ST NOTA VF BYU</h3>
-                            <div id="table_st_nota_vf_summary" class="col-12 mb-3">
+                            <h3 class="mb-3">ST DIGIPOS SA</h3>
+
+                            <div id="table_st_sa_detail" class="col-12 mb-3">
                                 <div class="table-responsive mytable">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
-                                        <thead>
+                                         <thead>
                                             <tr class="text-center align-middle">
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">TAP</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">CHANNEL</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col">DIGIPOS</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">OUTLET</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: auto;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VF BYU <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST DIGIPOS SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
@@ -31,6 +32,7 @@
                                                 <th colspan="2" class="deep_blue" scope="col">GAP EOM</th>
                                             </tr>
                                             <tr class="text-center align-middle">
+                                                
                                                 <th class="deep_blue" scope="col">OA</th>
                                                 <th class="deep_blue" scope="col">OA%</th>
                                                 <th class="deep_blue" scope="col">QTY</th>
@@ -56,9 +58,9 @@
                                         </thead>
                                         <tbody>
                                             <?php if($cek_result == 'result available'){ ?>
-                                                <?php foreach($result_trx_summary as $rows){ if($rows['tap'] == 'TOTAL'){?>
+                                                <?php foreach($result_trx_summary as $rows){ if($rows['id_digipos'] == 'TOTAL'){?>
                                                     <tr class="bg-total">
-                                                        <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td>
+                                                        <td colspan="4" class="text-center"><?php echo $rows['id_digipos']; ?></td>
                                                         <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
                                                         <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
                                                         <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
@@ -79,15 +81,12 @@
                                                         <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                     </tr>
                                                 <?php }} ?>
-                                                <?php foreach($result_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){?>
-                                                    <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
-                                                        <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
-                                                            <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
-                                                        <?php }else{ ?>
-                                                            <td><?php echo $rows['tap']; ?></td>
-                                                            <td><?php echo $rows['channel']; ?></td>
-                                                            <td ><?php echo $rows['pic']; ?></td>
-                                                        <?php } ?>
+                                                <?php foreach($result_trx_summary as $rows){ if($rows['id_digipos'] != 'TOTAL'){?>
+                                                    <tr>
+                                                        <td class="text-start"><?php echo $rows['id_digipos']; ?></td>
+                                                        <td><?php echo $rows['outlet']; ?></td>
+                                                        <td class="text-center"><?php echo $rows['hari_pjp']; ?></td>
+                                                        <td ><?php echo $rows['pic']; ?></td>
                                                         <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
                                                         <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
                                                         <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>

@@ -10,8 +10,8 @@
                     <div class="container-fluid rounded main-bg pt-3">
                         <div class="row mt-1">
                             <?= $this->include('/includes/include_breadcrumb'); ?>
-                            <h3 class="mb-3">ST NOTA VF BYU</h3>
-                            <div id="table_st_nota_vf_summary" class="col-12 mb-3">
+                            <h3 class="mb-3">ST DIGIPOS VF BYU</h3>
+                            <div id="table_st_digipos_vf_summary" class="col-12 mb-3">
                                 <div class="table-responsive">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                         <thead>
@@ -20,7 +20,7 @@
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">CHANNEL</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VF BYU <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST DIGIPOS VF BYU <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
@@ -112,7 +112,7 @@
                                  </div>
                             </div>
 
-                            <div id="table_st_nota_vf_detail" class="col-12 mb-3">
+                            <div id="table_st_digipos_vf_detail" class="col-12 mb-3">
                                 <div class="table-responsive">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                          <thead>
@@ -122,7 +122,7 @@
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VF BYU <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST DIGIPOS VF BYU <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">

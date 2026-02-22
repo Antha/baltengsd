@@ -2,16 +2,16 @@
 
 namespace App\Controllers;
 
-use App\Models\StNotaVfSimModel;
+use App\Models\StDigiposVfSimModel;
 helper(['custom_helper']);
 
-class St_nota_vf_sim extends BaseController
+class St_digipos_vf_sim extends BaseController
 {
     protected $model;
 
     public function __construct()
     {
-        $this->model = new StNotaVfSimModel();
+        $this->model = new StDigiposVfSimModel();
     }
 
     public function index()
@@ -37,23 +37,23 @@ class St_nota_vf_sim extends BaseController
             $hari_pjp = "UPPER(hari_pjp) = '".$parse_hari_pjp."'";
         }
 
-        $query_update_date_st_nota = $this->model->get_latest_update_date_st_nota();
-        $dm = date("d",strtotime($query_update_date_st_nota['update_date_m']));
-        $dm1 = date("d",strtotime($query_update_date_st_nota['update_date_m1']));
-        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_nota['update_date_m'])));
+        $query_update_date_st_digipos = $this->model->get_latest_update_date_st_digipos();
+        $dm = date("d",strtotime($query_update_date_st_digipos['update_date_m']));
+        $dm1 = date("d",strtotime($query_update_date_st_digipos['update_date_m1']));
+        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_digipos['update_date_m'])));
         $data['parse_type'] = $parse_validity;
         $data['hari_pjp'] = $parse_hari_pjp;
 
         $data['result_trx_summary'] = $this->model->data_summary($validity,$hari_pjp,$dm,$dm1,$idtel);
         $data['result_trx_detail'] = $this->model->data_detail($validity,$hari_pjp,$dm,$dm1,$idtel);
 
-        return view('st_nota_vf_sim_page',$data);
+        return view('st_digipos_vf_sim_page',$data);
         
     }
 
     public function summary_all()
     {
-        //$idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
+        //$idtel = '8025950853';//hapus & ganti dengan data idtsel dari user yg mengakses modul
         $idtel = $this->request->getGet('parse_idtel');
 
         //parsing monitoring variable (1D,2D,3D,5D,7D,30D,ALL)
@@ -74,10 +74,10 @@ class St_nota_vf_sim extends BaseController
             $hari_pjp = "UPPER(hari_pjp) = '".$parse_hari_pjp."'";
         }
 
-        $query_update_date_st_nota = $this->model->get_latest_update_date_st_nota();
-        $dm = date("d",strtotime($query_update_date_st_nota['update_date_m']));
-        $dm1 = date("d",strtotime($query_update_date_st_nota['update_date_m1']));
-        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_nota['update_date_m'])));
+        $query_update_date_st_digipos = $this->model->get_latest_update_date_st_digipos();
+        $dm = date("d",strtotime($query_update_date_st_digipos['update_date_m']));
+        $dm1 = date("d",strtotime($query_update_date_st_digipos['update_date_m1']));
+        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_digipos['update_date_m'])));
         $data['parse_type'] = $parse_validity;
         $data['hari_pjp'] = $parse_hari_pjp;
 
@@ -86,22 +86,22 @@ class St_nota_vf_sim extends BaseController
         $data['cek_result'] = empty($result) ? 'no result' : 'result available';
         $data['result_trx_summary'] =  $result;
 
-        return view('st_nota_vf_sim_page_v2',$data);
+        return view('st_digipos_vf_sim_page_v2',$data);
         
     }
 
     public function summary_by_outlet()
     {
-        $idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
-        //$idtel = $this->request->getGet('parse_idtel');
+        //$idtel = '1026383114';//hapus & ganti dengan data idtsel dari user yg mengakses modul
+        $idtel = $this->request->getGet('parse_idtel');
 
         //parsing $id_outlet
-        $idOutlet = "3300013682";//hapus & ganti dengan  data id outlet dari input user
-        //$idOutlet = $this->request->getGet('parse_idoutlet');
+        //$idOutlet = "3300013682";//hapus & ganti dengan  data id outlet dari input user
+        $idOutlet = $this->request->getGet('parse_idoutlet');
 
         //parsing monitoring variable (1D,2D,3D,5D,7D,30D,ALL)
-        $parse_validity = "30D";//hapus & ganti dengan data validity dari input user
-        //$parse_validity = $this->request->getGet('parse_type');
+        //$parse_validity = "30D";//hapus & ganti dengan data validity dari input user
+        $parse_validity = $this->request->getGet('parse_type');
         if($parse_validity == "ALL"){
             $validity = "";
         }else{
@@ -110,10 +110,10 @@ class St_nota_vf_sim extends BaseController
 
         $parse_hari_pjp = "ALL";//FIX
 
-        $query_update_date_st_nota = $this->model->get_latest_update_date_st_nota();
-        $dm = date("d",strtotime($query_update_date_st_nota['update_date_m']));
-        $dm1 = date("d",strtotime($query_update_date_st_nota['update_date_m1']));
-        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_nota['update_date_m'])));
+        $query_update_date_st_digipos = $this->model->get_latest_update_date_st_digipos();
+        $dm = date("d",strtotime($query_update_date_st_digipos['update_date_m']));
+        $dm1 = date("d",strtotime($query_update_date_st_digipos['update_date_m1']));
+        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_digipos['update_date_m'])));
         $data['parse_type'] = $parse_validity;
         $data['hari_pjp'] = $parse_hari_pjp;
 
@@ -122,7 +122,7 @@ class St_nota_vf_sim extends BaseController
         $data['cek_result'] = empty($result) ? 'no result' : 'result available';
         $data['result_trx_summary'] =  $result;
 
-        return view('st_nota_vf_sim_page_v3',$data);
+        return view('st_digipos_vf_sim_page_v3',$data);
         
     }
 
@@ -153,10 +153,10 @@ class St_nota_vf_sim extends BaseController
             $hari_pjp = "UPPER(hari_pjp) = '".$parse_hari_pjp."'";
         }
 
-        $query_update_date_st_nota = $this->model->get_latest_update_date_st_nota();
-        $dm = date("d",strtotime($query_update_date_st_nota['update_date_m']));
-        $dm1 = date("d",strtotime($query_update_date_st_nota['update_date_m1']));
-        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_nota['update_date_m'])));
+        $query_update_date_st_digipos = $this->model->get_latest_update_date_st_digipos();
+        $dm = date("d",strtotime($query_update_date_st_digipos['update_date_m']));
+        $dm1 = date("d",strtotime($query_update_date_st_digipos['update_date_m1']));
+        $data['tgl_update'] = $dm." ".showLongBln(date("F",strtotime($query_update_date_st_digipos['update_date_m'])));
         $data['parse_type'] = $parse_validity;
         $data['hari_pjp'] = $parse_hari_pjp;
 
@@ -165,7 +165,7 @@ class St_nota_vf_sim extends BaseController
         $data['cek_result'] = empty($result) ? 'no result' : 'result available';
         $data['result_trx_summary'] =  $result;
 
-        return view('st_nota_vf_sim_page_v3',$data);
+        return view('st_digipos_vf_sim_page_v3',$data);
         
     }
 }

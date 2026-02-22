@@ -10,17 +10,92 @@
                     <div class="container-fluid rounded main-bg pt-3">
                         <div class="row mt-1">
                             <?= $this->include('/includes/include_breadcrumb'); ?>
-                            <h3 class="mb-3">ST NOTA VF BYU</h3>
-                            <div id="table_st_nota_vf_summary" class="col-12 mb-3">
+                            <h3 class="mb-3">ST DIGIPOS VF SIMPATI</h3>
+                            <div class="filter_group_top">
+                                <form id="filterFormOmsetTrxTop" method="post" action="<?php echo esc(base_url('/st_digipos_vf_sim_dashboard')); ?>" enctype="multipart/form-data">
+                                    <?= csrf_field() ?>
+                                    <div class="row no-gutters">
+                                        <div class="form-group col-md-6 col-12">
+                                            <div class="input-group dropdown_input">
+
+                                                <div class="form-group col-3 mb-3 pe-2" id="wrap_filter_tap">
+                                                    <span class="d-inline-block mb-1 text-secondary">TAP</span>
+                                                    <select name='filter_tap' id='filter_tap' class="select_filter px-2 py-2" title="TAP" style="width:100%;">
+                                                        <?php foreach ($tap_list as $tap): ?>
+                                                            <option value="<?= esc($tap['tap']) ?>" <?php if(esc($tap['tap']) == esc($selected_tap)){ ?>selected<?php } ?>>
+                                                                <?= esc($tap['tap']) ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="form-group col-2 mb-3 pe-2" id="wrap_filter_monitoring">
+                                                    <span class="d-inline-block mb-1 text-secondary">MONITORING</span>
+                                                    <select name='filter_monitoring' id='filter_monitoring' class="select_filter px-2 py-2" title="MONITORING" style="width:100%;">
+                                                        <?php foreach ($monitoring_list as $monitoring): ?>
+                                                            <option value="<?= esc($monitoring) ?>" <?php if(esc($monitoring) == esc($selected_pt)){ ?>selected<?php } ?>>
+                                                                <?= esc($monitoring) ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+
+                                                 <div class="form-group col-2 mb-3 pe-2" id="wrap_filter_hari_pjp">
+                                                    <span class="d-inline-block mb-1 text-secondary">HARI PJP</span>
+                                                    <select name='filter_hari_pjp' id='filter_hari_pjp' class="select_filter px-2 py-2" title="HARI PJP" style="width:100%;">
+                                                        <option value="" selected disabled>HARI PJP</option>
+                                                        <?php foreach ($hari_pjp_list as $hari): ?>
+                                                            <option value="<?= esc($hari) ?>" <?php if(esc($hari) == esc($selected_hp)){ ?>selected<?php } ?>>
+                                                                <?= esc($hari) ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group col-3 mb-3 pe-2" id="wrap_filter_pic">
+                                                    <span class="d-inline-block mb-1 text-secondary">PIC</span>
+                                                    <select name='filter_pic' id='filter_pic' class="select_filter px-2 py-2" title="PIC" style="width:100%;">
+                                                        <?php foreach ($pic_list as $pic): ?>
+                                                            <option value="<?= esc($pic['pic']) ?>" <?php if(esc($pic['pic']) == esc($selected_pic)){ ?>selected<?php } ?>>
+                                                                <?= esc($pic['pic']) ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-2 mb-3" id="wrap_btn_submit">
+                                                    <span> </span>
+                                                    <button name='btn_submit' type="submit" id="btn_submit" class="btn-green rounded float-start px-3 py-2 border-0">
+                                                        FILTER
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p id="errorMessage" class="text-danger"></p> 
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="btn-capture-dl-wrapper container-fluid mb-2">
+                                <div class="row justify-content-end">
+                                    <div class= "col-sm-1 col-3 text-end pe-lg-0 pe-1">
+                                        <button id="dlImgTop" class="submit_btn rounded p-2 btn-green border-0">CAPTURE</button>
+                                    </div>
+                                    <div class= "col-sm-1 col-3 text-end ps-0">
+                                        <button id="exportCsvTop" class="submit_btn rounded p-2 btn-green border-0">DOWNLOAD</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="table_st_digipos_vf_simpati_summary" class="col-12 mb-3">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
+                                    <table id="dataTableTop" class="table table-sm table-bordered table-hover table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col">TAP</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col">CHANNEL</th>
-                                                <th rowspan="3" class="deep_blue align-middle" scope="col">SALES FORCE</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 150px;">TAP</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 150px;">CHANNEL</th>
+                                                <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VF BYU <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST DIGIPOS VF SIMPATI <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
@@ -55,11 +130,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($result_trx_summary as $rows){ if($rows['tap'] == 'TOTAL'){?>
+                                            <?php foreach($result_trx_summary as $rows){if($rows['tap'] == 'TOTAL'){  ?>
                                                 <tr class="bg-total">
                                                     <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td>
-                                                    <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
-                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
+                                                    <td class="text-center"><?php echo $rows['or_trx']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
@@ -78,7 +153,7 @@
                                                     <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
-                                            <?php foreach($result_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){?>
+                                            <?php foreach($result_trx_summary as $rows){if($rows['tap'] != 'TOTAL'){  ?>
                                                 <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
                                                     <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
                                                         <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
@@ -87,8 +162,8 @@
                                                         <td><?php echo $rows['channel']; ?></td>
                                                         <td ><?php echo $rows['pic']; ?></td>
                                                     <?php } ?>
-                                                    <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
-                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
+                                                    <td class="text-center"><?php echo $rows['or_trx']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
@@ -112,9 +187,19 @@
                                  </div>
                             </div>
 
-                            <div id="table_st_nota_vf_detail" class="col-12 mb-3">
+                            <div class="btn-capture-dl-wrapper container-fluid mt-4 mb-2">
+                                <div class="row justify-content-end">
+                                    <div class= "col-sm-1 col-3 text-end pe-lg-0 pe-1">
+                                        <button id="dlImgBot" class="submit_btn rounded p-2 btn-green border-0">CAPTURE</button>
+                                    </div>
+                                    <div class= "col-sm-1 col-3 text-end ps-0">
+                                        <button id="exportCsvBot" class="submit_btn rounded p-2 btn-green border-0">DOWNLOAD</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="table_st_digipos_vf_simpati_detail" class="col-12 mb-3">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
+                                    <table id="dataTableBot" class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                          <thead>
                                             <tr class="text-center align-middle">
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">DIGIPOS</th>
@@ -122,7 +207,7 @@
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VF BYU <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST DIGIPOS VF SIMPATI <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
@@ -158,7 +243,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($result_trx_detail as $rows){ if($rows['id_digipos'] == 'TOTAL'){?>
+                                            <?php foreach($result_trx_detail as $rows){if($rows['id_digipos'] == 'TOTAL'){ ?>
                                                 <tr class="bg-total">
                                                     <td class="text-center" colspan="4"><?php echo $rows['id_digipos']; ?></td>
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
@@ -181,7 +266,7 @@
                                                     <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
-                                            <?php foreach($result_trx_detail as $rows){ if($rows['id_digipos'] != 'TOTAL'){?>
+                                            <?php foreach($result_trx_detail as $rows){if($rows['id_digipos'] != 'TOTAL'){ ?>
                                                 <tr>
                                                     <td class="text-start"><?php echo $rows['id_digipos']; ?></td>
                                                     <td><?php echo $rows['outlet']; ?></td>
@@ -218,5 +303,202 @@
             <?= $this->include('/includes/include_footer'); ?>
         </div>      
     </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script>
+     $(document).ready(function() {
+        $('#filter_tap').on('change', function () {
+            let tap = $(this).val();
 
+            $('#filter_pic').html('<option value="">Loading...</option>');
+
+            $.ajax({
+                url: "<?= base_url('/st_digipos_vf_sim_dashboard/getPicByTap') ?>",
+                type: "POST",
+                data: {
+                    tap: tap,
+                    <?= csrf_token() ?>: "<?= csrf_hash() ?>"
+                },
+                dataType: "json",
+                success: function (res) {
+                    let html = '';
+                    $.each(res, function (i, v) {
+                        html += `<option value="${v.pic}">${v.pic}</option>`;
+                    });
+                    $('#filter_pic').html(html);
+                }
+            });
+        });
+
+        $('#exportCsvTop').click(function () {
+            function exportTableToCSV(filename) {
+                var csv = [];
+                var rows = $('#dataTableTop').find('tr');
+
+                rows.each(function () {
+                    var row = [];
+                    $(this).find('th, td').each(function () {
+                        // Bungkus isi sel dengan tanda kutip ganda untuk menangani koma dalam sel
+                        row.push('"' + $(this).text().trim() + '"');
+                    });
+                    csv.push(row.join(','));
+                });
+
+                var csvContent = csv.join("\n");
+                var blob = new Blob([csvContent], { type: "text/csv" });
+
+                // Deteksi apakah dijalankan di Android atau browser
+                if (window.Android && typeof window.Android.downloadCSV === 'function') {
+                    // Android: Kirim data melalui JavaScriptInterface
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        window.Android.downloadCSV(reader.result, filename);
+                    };
+                    reader.readAsText(blob);
+                } else {
+                    // Browser: Gunakan mekanisme unduh standar
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.download = filename;
+                    downloadLink.style.display = 'none';
+
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                }
+            }
+
+            // Call the function with a file name
+            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // Format YYYYMMDDHHMMSS
+            const exported_fname = `scan_summary_${dateformat}.csv`;
+            exportTableToCSV(exported_fname);
+
+        });
+
+        $('#exportCsvBot').click(function () {
+            function exportTableToCSV(filename) {
+                var csv = [];
+                var rows = $('#dataTableBot').find('tr');
+
+                rows.each(function () {
+                    var row = [];
+                    $(this).find('th, td').each(function () {
+                        // Bungkus isi sel dengan tanda kutip ganda untuk menangani koma dalam sel
+                        row.push('"' + $(this).text().trim() + '"');
+                    });
+                    csv.push(row.join(','));
+                });
+
+                var csvContent = csv.join("\n");
+                var blob = new Blob([csvContent], { type: "text/csv" });
+
+                // Deteksi apakah dijalankan di Android atau browser
+                if (window.Android && typeof window.Android.downloadCSV === 'function') {
+                    // Android: Kirim data melalui JavaScriptInterface
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        window.Android.downloadCSV(reader.result, filename);
+                    };
+                    reader.readAsText(blob);
+                } else {
+                    // Browser: Gunakan mekanisme unduh standar
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.download = filename;
+                    downloadLink.style.display = 'none';
+
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                }
+            }
+
+            // Call the function with a file name
+            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // Format YYYYMMDDHHMMSS
+            const exported_fname = `scan_summary_${dateformat}.csv`;
+            exportTableToCSV(exported_fname);
+
+        });
+
+        $('#dlImgTop').on('click', function () {
+
+            const wrapper = document.querySelector('#table_st_digipos_vf_simpati_summary .table-responsive');
+            const table   = document.querySelector('#dataTableTop');
+
+            // SIMPAN style asli
+            const oldOverflowX = wrapper.style.overflowX;
+            const oldOverflowY = wrapper.style.overflowY;
+            const oldMaxWidth  = wrapper.style.maxWidth;
+
+            // BUKA scroll sementara
+            wrapper.style.overflowX = 'visible';
+            wrapper.style.overflowY = 'visible';
+            wrapper.style.maxWidth  = 'none';
+
+            html2canvas(table, {
+                scale: window.devicePixelRatio * 2,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+
+                // KEMBALIKAN style semula
+                wrapper.style.overflowX = oldOverflowX;
+                wrapper.style.overflowY = oldOverflowY;
+                wrapper.style.maxWidth  = oldMaxWidth;
+
+                // DOWNLOAD IMAGE
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `table_st_digipos_vf_simpati_summary_${Date.now()}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            }).catch(err => {
+                console.error('Capture error:', err);
+            });
+
+        });
+
+        $('#dlImgBot').on('click', function () {
+
+            const wrapper = document.querySelector('#table_st_digipos_vf_simpati_detail .table-responsive');
+            const table   = document.querySelector('#dataTableBot');
+
+            // SIMPAN style asli
+            const oldOverflowX = wrapper.style.overflowX;
+            const oldOverflowY = wrapper.style.overflowY;
+            const oldMaxWidth  = wrapper.style.maxWidth;
+
+            // BUKA scroll sementara
+            wrapper.style.overflowX = 'visible';
+            wrapper.style.overflowY = 'visible';
+            wrapper.style.maxWidth  = 'none';
+
+            html2canvas(table, {
+                scale: window.devicePixelRatio * 2,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+
+                // KEMBALIKAN style semula
+                wrapper.style.overflowX = oldOverflowX;
+                wrapper.style.overflowY = oldOverflowY;
+                wrapper.style.maxWidth  = oldMaxWidth;
+
+                // DOWNLOAD IMAGE
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `table_st_sa_detail_full_${Date.now()}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            }).catch(err => {
+                console.error('Capture error:', err);
+            });
+
+        });
+     });
+</script>
 <?php $this->endSection() ?>

@@ -10,9 +10,9 @@
                     <div class="container-fluid rounded main-bg pt-3">
                         <div class="row mt-1">
                             <?= $this->include('/includes/include_breadcrumb'); ?>
-                            <h3 class="mb-3">ST NOTA VF BYU</h3>
-                            <div id="table_st_nota_vf_summary" class="col-12 mb-3">
-                                <div class="table-responsive">
+                            <h3 class="mb-3">ST DIGIPOS SA</h3>
+                             <div id="table_st_sa_summary" class="col-12 mb-3">
+                                <div class="table-responsive mytable">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">
@@ -20,7 +20,7 @@
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">CHANNEL</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VF BYU <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST DIGIPOS SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">
@@ -87,8 +87,9 @@
                                                         <td><?php echo $rows['channel']; ?></td>
                                                         <td ><?php echo $rows['pic']; ?></td>
                                                     <?php } ?>
-                                                    <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
-                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
+                                                   
+                                                    <td class="text-center"><?php echo $rows['or_trx']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
@@ -109,11 +110,11 @@
                                             <?php }} ?>
                                         </tbody>
                                     </table>
-                                 </div>
+                                </div>
                             </div>
 
-                            <div id="table_st_nota_vf_detail" class="col-12 mb-3">
-                                <div class="table-responsive">
+                            <div id="table_st_sa_detail" class="col-12 mb-3">
+                                <div class="table-responsive mytable">
                                     <table class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                          <thead>
                                             <tr class="text-center align-middle">
@@ -122,7 +123,7 @@
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 250px;">SALES FORCE</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">OR</th>
-                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA VF BYU <?php echo $parse_type; ?></th>
+                                                <th colspan="13" class="deep_blue" scope="col">MONITORING ST DIGIPOS SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
                                             <tr class="text-center align-middle">

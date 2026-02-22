@@ -2,7 +2,7 @@
 
 <?php $this->section('content') ?>
 
-    <div id="main-wrapper" class="dashboard-page min-vh-100 d-flex flex-column">
+    <div id="main-wrapper" class="dashboard-page min-vh-100 d-flex flex-column bg-body-secondary">
         <?= $this->include('/includes/include_top_navbar'); ?>
         <div class="container-fluid menu-dashboard bg-body-secondary">
             <div class="row">
@@ -49,6 +49,39 @@
                                         </div>
                                     
                                         <span class="mt-3 d-inline-block">ST NOTA VF SIM</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 col-sm-3 col-md-3 col-lg-2 text-center mb-4">
+                                <a href="<?= base_url('/st_digipos_sa_dashboard') ?>" class="d-inline-block border rounded w-100 menu">
+                                    <div class="p-3">
+                                        <div class="d-inline-block w-100">
+                                            <i class="fa-regular fa-note-sticky fs-1"></i>
+                                        </div>
+                                    
+                                        <span class="mt-3 d-inline-block">ST DIGIPOS SA</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 col-sm-3 col-md-3 col-lg-2 text-center mb-4">
+                                <a href="<?= base_url('/st_digipos_vf_byu_dashboard') ?>" class="d-inline-block border rounded w-100 menu">
+                                    <div class="p-3">
+                                        <div class="d-inline-block w-100">
+                                            <i class="fa-regular fa-note-sticky fs-1"></i>
+                                        </div>
+                                    
+                                        <span class="mt-3 d-inline-block">ST DIGIPOS VF BYU</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 col-sm-3 col-md-3 col-lg-2 text-center mb-4">
+                                <a href="<?= base_url('/st_digipos_vf_sim_dashboard') ?>" class="d-inline-block border rounded w-100 menu">
+                                    <div class="p-3">
+                                        <div class="d-inline-block w-100">
+                                            <i class="fa-regular fa-note-sticky fs-1"></i>
+                                        </div>
+                                    
+                                        <span class="mt-3 d-inline-block">ST DIGIPOS VF SIM</span>
                                     </div>
                                 </a>
                             </div>
