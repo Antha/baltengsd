@@ -76,13 +76,17 @@
                                                     <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
                                             <?php }} ?>
-                                            <?php foreach($query_omset_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){?>
-                                                <tr>
-                                                    <td><?php echo $rows['tap']; ?></td>
-                                                    <td><?php echo $rows['channel']; ?></td>
-                                                    <td ><?php echo $rows['pic']; ?></td>
-                                                    <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
-                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
+                                            <?php foreach($query_omset_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){ ?>   
+                                                <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
+                                                    <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
+                                                        <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
+                                                    <?php }else{ ?>
+                                                        <td><?php echo $rows['tap']; ?></td>
+                                                        <td><?php echo $rows['channel']; ?></td>
+                                                        <td ><?php echo $rows['pic']; ?></td>
+                                                    <?php } ?>
+                                                    <td class="text-center"><?php echo $rows['or_trx']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
                                                     <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>

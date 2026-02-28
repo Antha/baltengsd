@@ -77,10 +77,14 @@
                                                 </tr>
                                             <?php }} ?>
                                             <?php foreach($query_omset_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){?>
-                                                <tr>
-                                                    <td><?php echo $rows['tap']; ?></td>
-                                                    <td><?php echo $rows['channel']; ?></td>
-                                                    <td ><?php echo $rows['pic']; ?></td>
+                                                <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
+                                                    <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
+                                                        <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
+                                                    <?php }else{ ?>
+                                                        <td><?php echo $rows['tap']; ?></td>
+                                                        <td><?php echo $rows['channel']; ?></td>
+                                                        <td ><?php echo $rows['pic']; ?></td>
+                                                    <?php } ?>
                                                     <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
                                                     <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>

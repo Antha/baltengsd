@@ -1,0 +1,631 @@
+2026-02-25 01:08:33 | ALL
+2026-02-27 22:18:38 | ALL
+2026-02-27 22:19:31 | PA
+2026-02-27 22:19:46 | RECHARGE
+2026-02-27 22:19:58 | CVM
+2026-02-27 22:20:53 | ST SA
+2026-02-27 22:20:53 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'SMART AKUISISI'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'SMART AKUISISI'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY hari_pjp DESC
+2026-02-27 22:21:09 | ST VF
+2026-02-27 22:21:09 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY hari_pjp DESC
+2026-02-27 22:21:24 | ST ALL
+2026-02-27 22:21:24 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk IN('SMART AKUISISI','VOUCHER FISIK')
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk IN('SMART AKUISISI','VOUCHER FISIK')
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY hari_pjp DESC
+2026-02-27 22:21:39 | DG
+2026-02-27 22:22:10 | CVM
+2026-02-27 22:25:05 | CVM
+2026-02-27 22:32:03 | CVM
+2026-02-27 22:32:45 | DG
+2026-02-27 22:34:06 | DG
+2026-02-27 22:34:22 | DG
+2026-02-27 22:40:26 | DG
+2026-02-27 22:41:14 | ALL
+2026-02-27 22:41:29 | ALL
+2026-02-27 22:43:18 | ALL
+2026-02-27 22:45:07 | PA
+2026-02-27 22:45:15 | PA
+2026-02-27 22:45:57 | RECHARGE
+2026-02-27 22:47:04 | CVM
+2026-02-27 22:50:50 | ST VF
+2026-02-27 22:50:50 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY hari_pjp DESC
+2026-02-27 22:57:09 | ST VF
+2026-02-27 22:57:09 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY hari_pjp DESC
+2026-02-27 22:59:53 | ST VF
+2026-02-27 22:59:53 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY hari_pjp DESC
+2026-02-27 23:00:03 | ST VF
+2026-02-27 23:00:03 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY hari_pjp DESC
+2026-02-27 23:01:50 | ST VF
+2026-02-27 23:01:50 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'VOUCHER FISIK'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY FIELD(hari_pjp, 'SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU'),outlet
+2026-02-27 23:04:24 | ST SA
+2026-02-27 23:04:24 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'SMART AKUISISI'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk = 'SMART AKUISISI'
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY FIELD(hari_pjp, 'SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU'),outlet
+2026-02-27 23:09:01 | ST ALL
+2026-02-27 23:09:01 | SELECT id_digipos,outlet,tap,channel,pic,hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk IN('SMART AKUISISI','VOUCHER FISIK')
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                GROUP BY id_digipos,outlet,hari_pjp,pic
+                
+                UNION ALL
+                
+                SELECT 'TOTAL' id_digipos,'' outlet,'' tap,'' channel,'' pic,'' hari_pjp,
+                COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END) or_trx,
+                COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END) oa_trx_m1,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M-1' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_m1,  
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) trx_m1,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) rev_m1,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0) target_trx,
+                ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0) target_rev,
+                COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END) oa_trx_mtd,
+                IFNULL(ROUND((COUNT(CASE WHEN grouping_periode = 'M' AND qty > 0 THEN qty END)/COUNT(CASE WHEN grouping_periode = 'M' THEN hari_pjp END))*100,0),0) percent_oa_trx_mtd,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) trx_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)*103)/100,0))*100,0),0) ach_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) rev_mtd,
+                IFNULL(ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/ROUND((IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)*103)/100,0))*100,0),0) ach_rev,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0)/31))*100,0),0) rr_trx,
+                IFNULL(ROUND(((IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0)/31)/(IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0)/31))*100,0),0) rr_rev,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN qty END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN qty END),0) gap_trx,
+                IFNULL(SUM(CASE WHEN grouping_periode = 'M' THEN rev END),0) - IFNULL(SUM(CASE WHEN grouping_periode = 'M-1' THEN rev END),0) gap_rev
+                FROM
+                (SELECT A.id_digipos,outlet,tap,channel,pic,hari_pjp,periode_date,grouping_periode,jenis_produk,nama_produk,tipe_produk
+                validity,SUM(qty) qty,SUM(rev) rev
+                FROM db_outlet A
+                LEFT JOIN  db_st_digipos B
+                ON A.`id_digipos` = B.`id_outlet`
+                WHERE UPPER(channel) = 'SF CHANNELING' AND pic = 'IGST NYOMAN PUTRA CHANDRA BUDI' AND UPPER(hari_pjp) IN ('SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU')  AND 1  AND jenis_produk IN('SMART AKUISISI','VOUCHER FISIK')
+                GROUP BY id_digipos,outlet,tap,hari_pjp,pic,grouping_periode
+                ) source
+                
+                ORDER BY FIELD(hari_pjp, 'SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU'),outlet
+2026-02-27 23:10:15 | DG

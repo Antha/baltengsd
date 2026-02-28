@@ -54,30 +54,56 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($query_omset_trx_summary as $rows){ ?>
-                                                <tr>
-                                                    <td><?php echo $rows['tap']; ?></td>
-                                                    <td><?php echo $rows['channel']; ?></td>
-                                                    <td ><?php echo $rows['pic']; ?></td>
+                                            <?php foreach($query_omset_trx_summary as $rows){ if($rows['tap'] == 'TOTAL'){ ?>   
+                                                <tr class="bg-total">
+                                                    <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td>
                                                     <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
-                                                        <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
-                                                        <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
-                                                        <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
-                                                        <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
-                                                        <td class="text-end"><?php echo $rows['percent_oa_trx_mtd']; ?>%</td>
-                                                        <td class="text-end"><?php echo nf0($rows['trx_mtd']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['ach_trx']); ?>%</td>
-                                                        <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['ach_rev']); ?>%</td>
-                                                        <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
-                                                        <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
-                                                        <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
-                                                        <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_mtd']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
-                                            <?php } ?>
+                                            <?php }} ?>
+                                            <?php foreach($query_omset_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){ ?>   
+                                                <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
+                                                    <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
+                                                        <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
+                                                    <?php }else{ ?>
+                                                        <td><?php echo $rows['tap']; ?></td>
+                                                        <td><?php echo $rows['channel']; ?></td>
+                                                        <td ><?php echo $rows['pic']; ?></td>
+                                                    <?php } ?>
+                                                    <td class="text-center"><?php echo $rows['or_trx']; ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
+                                                    <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_mtd']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
+                                                </tr>
+                                            <?php }} ?>
                                         </tbody>
                                     </table>
                                  </div>
@@ -128,31 +154,53 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($query_omset_trx_detail as $rows){ ?>
+                                             <?php foreach($query_omset_trx_detail as $rows){ if($rows['id_digipos'] == 'TOTAL'){ ?>   
+                                                <tr class="bg-total">
+                                                    <td colspan="4" class="text-center"><?php echo $rows['id_digipos']; ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_mtd']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
+                                                </tr>
+                                            <?php }} ?>
+                                            <?php foreach($query_omset_trx_detail as $rows){ if($rows['id_digipos'] != 'TOTAL'){ ?>   
                                                 <tr>
-                                                    <td class="text-end"><?php echo $rows['id_digipos']; ?></td>
+                                                    <td><?php echo $rows['id_digipos']; ?></td>
                                                     <td><?php echo $rows['outlet']; ?></td>
-                                                    <td class="text-center"><?php echo $rows['hari_pjp']; ?></td>
+                                                    <td><?php echo $rows['hari_pjp']; ?></td>
                                                     <td ><?php echo $rows['pic']; ?></td>
                                                     <td class="text-center"><?php echo nf0($rows['or_trx']); ?></td>
-                                                        <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
-                                                        <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
-                                                        <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
-                                                        <td class="text-center"><?php echo $rows['oa_trx_mtd']; ?></td>
-                                                        <td class="text-end"><?php echo $rows['percent_oa_trx_mtd']; ?>%</td>
-                                                        <td class="text-end"><?php echo nf0($rows['trx_mtd']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['ach_trx']); ?>%</td>
-                                                        <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
-                                                        <td class="text-end"><?php echo nf0($rows['ach_rev']); ?>%</td>
-                                                        <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
-                                                        <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
-                                                        <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
-                                                        <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_m1']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_m1']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_trx']); ?></td>
+                                                    <td class="text-end"><?php echo nf0($rows['target_rev']); ?></td>
+                                                    <td class="text-center"><?php echo nf0($rows['oa_trx_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['percent_oa_trx_mtd']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['trx_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo nf0($rows['rev_mtd']); ?></td>
+                                                    <td class="text-end"><?php echo $rows['ach_rev']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_trx']; ?>%</td>
+                                                    <td class="text-end"><?php echo $rows['rr_rev']; ?>%</td>
+                                                    <td <?php if($rows['gap_trx'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_trx']); ?></td>
+                                                    <td <?php if($rows['gap_rev'] < 0){ ?>class="text-end text-danger"<?php }else{ ?>class="text-end"<?php } ?>><?php echo nf0($rows['gap_rev']); ?></td>
                                                 </tr>
-                                            <?php } ?>
+                                            <?php }} ?>
                                         </tbody>
                                     </table>
                                  </div>

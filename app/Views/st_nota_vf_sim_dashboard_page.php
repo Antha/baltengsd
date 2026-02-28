@@ -303,8 +303,9 @@
             <?= $this->include('/includes/include_footer'); ?>
         </div>      
     </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url('/script/jszip.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('/script/FileSaver.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('/script/xlsx.full.min.js') ?>"></script>
 <script>
      $(document).ready(function() {
         $('#filter_tap').on('change', function () {
@@ -331,94 +332,43 @@
         });
 
         $('#exportCsvTop').click(function () {
-            function exportTableToCSV(filename) {
-                var csv = [];
-                var rows = $('#dataTableTop').find('tr');
 
-                rows.each(function () {
-                    var row = [];
-                    $(this).find('th, td').each(function () {
-                        // Bungkus isi sel dengan tanda kutip ganda untuk menangani koma dalam sel
-                        row.push('"' + $(this).text().trim() + '"');
-                    });
-                    csv.push(row.join(','));
-                });
+            var table = document.getElementById("dataTableTop");
 
-                var csvContent = csv.join("\n");
-                var blob = new Blob([csvContent], { type: "text/csv" });
+            // convert table ke workbook
+            var workbook = XLSX.utils.table_to_book(table, {
+                sheet: "Summary",
+                raw: true
+            });
 
-                // Deteksi apakah dijalankan di Android atau browser
-                if (window.Android && typeof window.Android.downloadCSV === 'function') {
-                    // Android: Kirim data melalui JavaScriptInterface
-                    var reader = new FileReader();
-                    reader.onload = function () {
-                        window.Android.downloadCSV(reader.result, filename);
-                    };
-                    reader.readAsText(blob);
-                } else {
-                    // Browser: Gunakan mekanisme unduh standar
-                    var downloadLink = document.createElement('a');
-                    downloadLink.href = URL.createObjectURL(blob);
-                    downloadLink.download = filename;
-                    downloadLink.style.display = 'none';
+            // nama file
+            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0,14);
+            const filename = `st_nota_vf_sim_summary_${dateformat}.xlsx`;
 
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                }
-            }
-
-            // Call the function with a file name
-            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // Format YYYYMMDDHHMMSS
-            const exported_fname = `scan_summary_${dateformat}.csv`;
-            exportTableToCSV(exported_fname);
+            // download
+            XLSX.writeFile(workbook, filename);
 
         });
 
         $('#exportCsvBot').click(function () {
-            function exportTableToCSV(filename) {
-                var csv = [];
-                var rows = $('#dataTableBot').find('tr');
 
-                rows.each(function () {
-                    var row = [];
-                    $(this).find('th, td').each(function () {
-                        // Bungkus isi sel dengan tanda kutip ganda untuk menangani koma dalam sel
-                        row.push('"' + $(this).text().trim() + '"');
-                    });
-                    csv.push(row.join(','));
-                });
+            var table = document.getElementById("dataTableBot");
 
-                var csvContent = csv.join("\n");
-                var blob = new Blob([csvContent], { type: "text/csv" });
+            // convert table ke workbook
+            var workbook = XLSX.utils.table_to_book(table, {
+                sheet: "Details",
+                raw: true
+            });
 
-                // Deteksi apakah dijalankan di Android atau browser
-                if (window.Android && typeof window.Android.downloadCSV === 'function') {
-                    // Android: Kirim data melalui JavaScriptInterface
-                    var reader = new FileReader();
-                    reader.onload = function () {
-                        window.Android.downloadCSV(reader.result, filename);
-                    };
-                    reader.readAsText(blob);
-                } else {
-                    // Browser: Gunakan mekanisme unduh standar
-                    var downloadLink = document.createElement('a');
-                    downloadLink.href = URL.createObjectURL(blob);
-                    downloadLink.download = filename;
-                    downloadLink.style.display = 'none';
+            // nama file
+            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0,14);
+            const filename = `st_nota_vf_sim_detail_${dateformat}.xlsx`;
 
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                }
-            }
-
-            // Call the function with a file name
-            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // Format YYYYMMDDHHMMSS
-            const exported_fname = `scan_summary_${dateformat}.csv`;
-            exportTableToCSV(exported_fname);
+            // download
+            XLSX.writeFile(workbook, filename);
 
         });
+
 
         $('#dlImgTop').on('click', function () {
 

@@ -88,7 +88,7 @@
                             </div>
                             <div id="table_ommset_trx_summary" class="col-12">
                                 <div class="table-responsive">
-                                    <table id="dataTableTop" class="table table-sm table-bordered table-hover table-responsive table-cstm">
+                                    <table id="dataTableTop" class="table table-sm table-bordered table-hover table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 150px;">TAP</th>
@@ -152,10 +152,14 @@
                                                 </tr>
                                             <?php }} ?>
                                             <?php foreach($query_omset_trx_summary as $rows){ if($rows['tap'] != 'TOTAL'){ ?>   
-                                                <tr>
-                                                    <td><?php echo $rows['tap']; ?></td>
-                                                    <td><?php echo $rows['channel']; ?></td>
-                                                    <td ><?php echo $rows['pic']; ?></td>
+                                                <tr <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>class="table-secondary"<?php } ?>>
+                                                    <?php if($rows['channel'] == 'ALL' && $rows['pic'] == 'ALL'){ ?>
+                                                        <td colspan="3" class="text-center"><?php echo $rows['tap']; ?></td> 
+                                                    <?php }else{ ?>
+                                                        <td><?php echo $rows['tap']; ?></td>
+                                                        <td><?php echo $rows['channel']; ?></td>
+                                                        <td ><?php echo $rows['pic']; ?></td>
+                                                    <?php } ?>
                                                     <td class="text-center"><?php echo $rows['or_trx']; ?></td>
                                                     <td class="text-center"><?php echo $rows['oa_trx_m1']; ?></td>
                                                     <td class="text-end"><?php echo $rows['percent_oa_trx_m1']; ?>%</td>
@@ -192,7 +196,7 @@
                             </div>
                             <div id="table_ommset_trx_detail" class="col-12 mb-5">
                                 <div class="table-responsive">
-                                    <table id="dataTableBot" class="table table-sm table-bordered table-hover table-responsive table-cstm">
+                                    <table id="dataTableBot" class="table table-sm table-bordered table-hover table-cstm">
                                         <thead>
                                             <tr class="text-center align-middle">
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">DIGIPOS</th>
@@ -294,8 +298,9 @@
         </div>      
     </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url('/script/jszip.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('/script/FileSaver.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('/script/xlsx.full.min.js') ?>"></script>
 <script>
      $(document).ready(function() {
         $('#filter_tap').on('change', function () {
@@ -321,7 +326,7 @@
             });
         });
 
-        $('#exportCsvTop').click(function () {
+        /*$('#exportCsvTop').click(function () {
             function exportTableToCSV(filename) {
                 var csv = [];
                 var rows = $('#dataTableTop').find('tr');
@@ -364,9 +369,28 @@
             const exported_fname = `scan_summary_${dateformat}.csv`;
             exportTableToCSV(exported_fname);
 
+        });*/
+
+        $('#exportCsvTop').click(function () {
+
+            var table = document.getElementById("dataTableTop");
+
+            // convert table ke workbook
+            var workbook = XLSX.utils.table_to_book(table, {
+                sheet: "Summary",
+                raw: true
+            });
+
+            // nama file
+            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0,14);
+            const filename = `omset_trx_summary_${dateformat}.xlsx`;
+
+            // download
+            XLSX.writeFile(workbook, filename);
+
         });
 
-        $('#exportCsvBot').click(function () {
+        /*$('#exportCsvBot').click(function () {
             function exportTableToCSV(filename) {
                 var csv = [];
                 var rows = $('#dataTableBot').find('tr');
@@ -408,6 +432,25 @@
             const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // Format YYYYMMDDHHMMSS
             const exported_fname = `scan_summary_${dateformat}.csv`;
             exportTableToCSV(exported_fname);
+
+        });*/
+
+        $('#exportCsvBot').click(function () {
+
+            var table = document.getElementById("dataTableBot");
+
+            // convert table ke workbook
+            var workbook = XLSX.utils.table_to_book(table, {
+                sheet: "Details",
+                raw: true
+            });
+
+            // nama file
+            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0,14);
+            const filename = `omset_trx_detail_${dateformat}.xlsx`;
+
+            // download
+            XLSX.writeFile(workbook, filename);
 
         });
 
