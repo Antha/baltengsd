@@ -410,7 +410,7 @@ class StNotaVfSimModel extends Model
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
                 IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0)  rr_rev,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -469,7 +469,7 @@ class StNotaVfSimModel extends Model
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
                 IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0)  rr_rev,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -534,7 +534,7 @@ class StNotaVfSimModel extends Model
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
                 IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0)  rr_rev,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -590,8 +590,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                IFNULL(ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -648,7 +648,7 @@ class StNotaVfSimModel extends Model
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
                 IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0)  rr_rev,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -709,8 +709,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                IFNULL(ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -766,8 +766,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                IFNULL(ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -823,8 +823,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                IFNULL(ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -888,7 +888,7 @@ class StNotaVfSimModel extends Model
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
                 IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0)  rr_rev,
+                 IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -947,7 +947,7 @@ class StNotaVfSimModel extends Model
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
                 IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0)  rr_rev,
+                 IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -1015,7 +1015,7 @@ class StNotaVfSimModel extends Model
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
                 IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0)  rr_rev,
+                 IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -1074,7 +1074,7 @@ class StNotaVfSimModel extends Model
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
                 IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0)  rr_rev,
+                 IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -1303,8 +1303,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                IFNULL(ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -1362,8 +1362,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1) rr_trx,
-                ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -1423,8 +1423,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                IFNULL(ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1),0) rr_trx,
-                IFNULL(ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1),0) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -1480,8 +1480,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1) rr_trx,
-                ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
@@ -1537,8 +1537,8 @@ class StNotaVfSimModel extends Model
                 IFNULL(ROUND((oa_trx_mtd/or_trx)*100,0),0) percent_oa_trx_mtd,
                 trx_mtd,IFNULL(ROUND((trx_mtd/target_trx)*100,1),0) ach_trx,
                 rev_mtd,IFNULL(ROUND((rev_mtd/target_rev)*100,1),0) ach_rev,
-                ROUND(((trx_mtd/$dm)/(trx_m1/$dm1))*100,1) rr_trx,
-                ROUND(((rev_mtd/$dm)/(rev_m1/$dm1))*100,1) rr_rev,
+                IFNULL(ROUND(((trx_mtd/$dm)/(target_trx/$dm))*100,1),0) rr_trx,
+                IFNULL(ROUND(((rev_mtd/$dm)/(target_rev/$dm))*100,1),0) rr_rev,
                 (trx_mtd - target_trx) gap_trx,
                 (rev_mtd - target_rev) gap_rev
                 FROM
