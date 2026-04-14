@@ -70,6 +70,7 @@ class ToolsModel extends Model
             case "MANAGER":
             case "MANAGER CLUSTER":
             case "MANAGER SUPPORT":
+            case "ADMIN IDS":
             case "BRANCH":
                 $option = " AND 1 ";
                 break;
@@ -78,7 +79,6 @@ class ToolsModel extends Model
             //case "MANAGER TAP DPS":
             case "TL IDS":
             case "ADMIN SF":
-            case "ADMIN IDS":
                 $option = " AND TAP = '" . $result['tap'] . "' ";
                 break;
 

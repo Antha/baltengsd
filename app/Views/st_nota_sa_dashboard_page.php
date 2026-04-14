@@ -98,14 +98,14 @@
                                                 <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
-                                            <tr class="text-center align-middle">
+                                            <tr class="text-center align-middle deep_blue">
                                                 <th colspan="4" class="deep_blue" scope="col">HISTORY FM-1</th>
                                                 <th colspan="3" class="deep_blue" scope="col">TARGET</th>
                                                 <th colspan="6" class="deep_blue" scope="col">ACH S/D TANGGAL <?php echo $tgl_update; ?></th>
                                                 <th colspan="2" class="deep_blue" scope="col">RUN RATE</th>
                                                 <th colspan="2" class="deep_blue" scope="col">GAP EOM</th>
                                             </tr>
-                                            <tr class="text-center align-middle">
+                                            <tr class="text-center align-middle deep_blue">
                                                 <th class="deep_blue" scope="col">OA</th>
                                                 <th class="deep_blue" scope="col">OA%</th>
                                                 <th class="deep_blue" scope="col">QTY</th>
@@ -202,7 +202,7 @@
                                 <div class="table-responsive">
                                     <table id="dataTableBot" class="table table-sm table-bordered table-hover table-responsive table-cstm">
                                          <thead>
-                                            <tr class="text-center align-middle">
+                                            <tr class="text-center align-middle deep_blue">
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">DIGIPOS</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col" style="min-width: 180px;">OUTLET</th>
                                                 <th rowspan="3" class="deep_blue align-middle" scope="col">HARI PJP</th>
@@ -211,14 +211,14 @@
                                                 <th colspan="13" class="deep_blue" scope="col">MONITORING ST NOTA SMART AQUITITION <?php echo $parse_type; ?></th>
                                                 <th colspan="8" class="deep_blue" scope="col">PJP : <?php echo $hari_pjp; ?></th>
                                             </tr>
-                                            <tr class="text-center align-middle">
+                                            <tr class="text-center align-middle deep_blue">
                                                 <th colspan="4" class="deep_blue" scope="col">HISTORY FM-1</th>
                                                 <th colspan="3" class="deep_blue" scope="col">TARGET</th>
                                                 <th colspan="6" class="deep_blue" scope="col">ACH S/D TANGGAL <?php echo $tgl_update; ?></th>
                                                 <th colspan="2" class="deep_blue" scope="col">RUN RATE</th>
                                                 <th colspan="2" class="deep_blue" scope="col">GAP EOM</th>
                                             </tr>
-                                            <tr class="text-center align-middle">
+                                            <tr class="text-center align-middle deep_blue">
                                                 
                                                 <th class="deep_blue" scope="col">OA</th>
                                                 <th class="deep_blue" scope="col">OA%</th>
