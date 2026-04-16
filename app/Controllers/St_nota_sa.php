@@ -143,16 +143,16 @@ class St_nota_sa extends BaseController
     
     public function summary_by_sf()
     {
-        $idtel = '8025950853';//hapus & ganti dengan data idtsel dari user yg mengakses modul
-        //$idtel = $this->request->getGet('parse_idtel');
+        //$idtel = '8025950853';//hapus & ganti dengan data idtsel dari user yg mengakses modul
+        $idtel = $this->request->getGet('parse_idtel');
 
         //parsing $pic variable
-        $pic = "FATIR FATAHILA ILHAM";//hapus & ganti dengan data pic dari input user
-        //$pic = $this->request->getGet('parse_sf');
+        //$pic = "FATIR FATAHILA ILHAM";//hapus & ganti dengan data pic dari input user
+        $pic = $this->request->getGet('parse_sf');
 
         //parsing tipe produk variable (SIMPATI,ESIM,BYU,ALL DENO)
-        $tipe_produk = "ALL DENO";//hapus & ganti dengan data tipe report dari input user
-        //$tipe_produk = $this->request->getGet('parse_tipe_produk');
+        //$tipe_produk = "ALL DENO";//hapus & ganti dengan data tipe report dari input user
+        $tipe_produk = $this->request->getGet('parse_tipe_produk');
         if($tipe_produk == "SIMPATI"){
             $nama_produk = "AND nama_produk = 'SIMPATI' AND tipe_produk = 'SIM'";
         }elseif($tipe_produk == "ESIM"){
@@ -184,6 +184,5 @@ class St_nota_sa extends BaseController
         $data['cek_result'] = empty($result) ? 'no result' : 'result available';
         $data['result_trx_summary'] =  $result;
         return view('st_nota_sa_page_v3',$data);
-        
     }
 }

@@ -19,6 +19,15 @@ class TelegramDataModel extends Model
 
         return $this->db->query($query)->getResultArray();
     }
+
+    public function query_sf_list_telegram($idtel)
+    {
+        $toolsModel = new ToolsModel();
+        $optionFilter = $toolsModel->getFilterByTelegramId($idtel);
+        $query = "SELECT distinct pic as sf_name FROM db_outlet WHERE channel = 'SF CHANNELING' $optionFilter"; 
+
+        return $this->db->query($query)->getResultArray();
+    }
 }
 
 ?>

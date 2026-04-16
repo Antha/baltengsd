@@ -91,4 +91,5 @@ $routes->group('replace', ['filter' => 'admin'], function ($routes) {
 //telegram
 $routes->post('api/telegram/verify', 'API\Telegram::verify');
 $routes->get('api/telegram/sf_list', 'API\Telegram::sf_list');
+$routes->get('api/telegram/sf_list_telegram', 'API\Telegram::sf_list_telegram');
 ?>
