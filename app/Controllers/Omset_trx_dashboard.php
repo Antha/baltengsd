@@ -112,6 +112,7 @@ class Omset_trx_dashboard extends BaseController
         $data['selected_hp'] = $parse_hari_pjp;
         $data['selected_pic'] = $parse_pic;
         $data['selected_tap'] = $parse_tap;
+
         
         //panggil fungsi get update date m
         $fc_get_update_m = $this->fc_get_update_m();
