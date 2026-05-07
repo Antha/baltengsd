@@ -41,7 +41,7 @@ class St_nota_vf_byu_dashboard extends BaseController
 
         $data['tap_list'] = query_tap_list(); 
 
-        $monitoring_list = ['ALL','1D','14D','30D'];
+        $monitoring_list = ['ALL','1D','14D','28D','30D'];
         //parsing list monitoring ke view
         $data['monitoring_list'] = $monitoring_list;
 
