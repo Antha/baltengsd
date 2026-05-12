@@ -81,6 +81,10 @@ class Auth extends BaseController
                 'isUser' => TRUE
             ]);
 
+            $created_date = date('Y-m-d H:i:s');
+
+            $model->insertLog($data['id'],$data['username'],$created_date);
+
             return $this->response->setJSON(['status' => true, 'redirect' => base_url('home')]);
         } else {
             return $this->response->setJSON(['status' => false, 'message' => 'Maaf, user tidak ditemukan']);
